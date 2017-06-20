@@ -8,7 +8,7 @@ namespace S3ClassLib
     public class AWSSetup 
     {
         static AmazonS3Client client;
-        public AWSSetup()
+        public AWSSetup(AWSCredentials creds, AmazonS3Config config)
         {
             
         }
