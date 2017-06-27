@@ -1,0 +1,82 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v1.1",
+    "signature": "aaf811c6fcab390a758b0d22790ecebc5146a452"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v1.1": {
+      "s3classlib/1.0.0": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.14.2",
+          "AWSSDK.S3": "3.3.7",
+          "System.Diagnostics.Contracts": "4.3.0"
+        },
+        "runtime": {
+          "S3ClassLib.dll": {}
+        }
+      },
+      "awssdk.core/3.3.14.2": {
+        "dependencies": {
+          "System.Collections.NonGeneric": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.Core.dll": {}
+        }
+      },
+      "awssdk.s3/3.3.7": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.14.2"
+        },
+        "runtime": {
+          "lib/netstandard1.3/AWSSDK.S3.dll": {}
+        }
+      },
+      "system.collections.nongeneric/4.0.1": {
+        "runtime": {
+          "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
+        }
+      },
+      "system.diagnostics.contracts/4.3.0": {
+        "runtime": {
+          "lib/netstandard1.0/System.Diagnostics.Contracts.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "s3classlib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "awssdk.core/3.3.14.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0XbI+6jd3g5dS7OM2pgvL9ad0hzOTWVwNJkqHPRRl6yD4RbSbzsJoGZJKOnS03ujIUTw4evp1rF1Nh/Q4YBjjA==",
+      "path": "awssdk.core/3.3.14.2",
+      "hashPath": "awssdk.core.3.3.14.2.nupkg.sha512"
+    },
+    "awssdk.s3/3.3.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s0iUxApA3VpEuJF5OyY8TAAFhYKtXRDTpGc5flHVMcnFc+dHZ/nVuhByFGDdLFq6EBadWh8jszx5CAZuLpC3YA==",
+      "path": "awssdk.s3/3.3.7",
+      "hashPath": "awssdk.s3.3.3.7.nupkg.sha512"
+    },
+    "system.collections.nongeneric/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T3OLBWNy+35JZOotY0ZcuM4DS5m2fy6dRPEFZPl91K9SWeColh//+x9PMjIEi/EmWBuz/t34ZLpSB955neYuKA==",
+      "path": "system.collections.nongeneric/4.0.1",
+      "hashPath": "system.collections.nongeneric.4.0.1.nupkg.sha512"
+    },
+    "system.diagnostics.contracts/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZYwvifodwkPdZ2qdHS1VbPA5jn1lyxAsPOJ6onQgoMU38ayok47uZjCC1GRF7mlyBfekhL5sQy0zKrdNlx2Xkw==",
+      "path": "system.diagnostics.contracts/4.3.0",
+      "hashPath": "system.diagnostics.contracts.4.3.0.nupkg.sha512"
+    }
+  }
+}
