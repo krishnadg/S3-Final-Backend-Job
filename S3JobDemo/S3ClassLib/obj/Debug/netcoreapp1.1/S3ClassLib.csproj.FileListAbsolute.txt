@@ -1,0 +1,8 @@
+/Users/brf4/Desktop/S3Job/S3ClassLib/bin/Debug/netcoreapp1.1/S3ClassLib.deps.json
+/Users/brf4/Desktop/S3Job/S3ClassLib/bin/Debug/netcoreapp1.1/S3ClassLib.runtimeconfig.json
+/Users/brf4/Desktop/S3Job/S3ClassLib/bin/Debug/netcoreapp1.1/S3ClassLib.runtimeconfig.dev.json
+/Users/brf4/Desktop/S3Job/S3ClassLib/obj/Debug/netcoreapp1.1/S3ClassLib.AssemblyInfo.cs
+/Users/brf4/Desktop/S3Job/S3ClassLib/bin/Debug/netcoreapp1.1/S3ClassLib.dll
+/Users/brf4/Desktop/S3Job/S3ClassLib/bin/Debug/netcoreapp1.1/S3ClassLib.pdb
+/Users/brf4/Desktop/S3Job/S3ClassLib/obj/Debug/netcoreapp1.1/S3ClassLib.dll
+/Users/brf4/Desktop/S3Job/S3ClassLib/obj/Debug/netcoreapp1.1/S3ClassLib.pdb

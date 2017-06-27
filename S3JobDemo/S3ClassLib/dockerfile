@@ -1,0 +1,10 @@
+
+FROM microsoft/dotnet:latest
+LABEL Name=s3classlib Version=0.0.1 
+#ARG source=.
+EXPOSE 8080
+COPY . /usr/share/dotnet/sdk/foo
+WORKDIR /usr/share/dotnet/sdk/foo
+RUN dotnet restore
+RUN dotnet build
+ENTRYPOINT dotnet run
