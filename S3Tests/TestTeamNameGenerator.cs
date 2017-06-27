@@ -49,7 +49,7 @@ namespace S3Tests
             var result = sut.GetListOfTeamNames();
 
             //ASSERT
-            Assert.True(true);
+            Assert.Equal(expectedTeamNames, result);
         }
         
 

@@ -43,11 +43,18 @@ namespace S3Tests
     public class TestObjectResponseParser : ObjRequestTestsBase
     {
     
-      /*  [Fact]
+        [Fact]
         public void TestObjectRequest()
         {
-            Assert.True(true);
-        }
+            //ARRANGE
+            client.CreateBucket0("S3TestBucket0");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TestBucket0");
+
+            //ACT
+            var result = sut.GetListOfTeamNames();
+
+            //ASSERT
+            Assert.Equal(expectedTeamNames, result);        }
         
 
         [Fact]
