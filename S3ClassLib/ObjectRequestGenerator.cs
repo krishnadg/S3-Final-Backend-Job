@@ -32,7 +32,7 @@ namespace S3ClassLib
         } 
 
         //Process list of requests and then make them..
-        public void ProcessListIntoRequests(List<string> teamNames)
+        public void ProcessListIntoObjectRequests(List<string> teamNames)
         {
             ListObjectsRequest listRequest;
             
@@ -41,14 +41,13 @@ namespace S3ClassLib
             {
                 listRequest = new ListObjectsRequest
                 {
+                    BucketName = bucket,
                     Prefix = "S3Bucket/",
                     Delimiter = team + "/"
                 };
 
                 objRequests.Add(listRequest);
             }
-
-
 
         }
 

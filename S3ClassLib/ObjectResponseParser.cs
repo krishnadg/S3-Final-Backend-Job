@@ -19,10 +19,19 @@ namespace S3ClassLib
         }
 
 
-        public void ParseObjectResponse(ListObjectsResponse listResponse)
+        public void ParseAllObjectResponses(List<ListObjectsResponse> listObjResponses)
+        {
+            foreach (ListObjectsResponse resp in listObjResponses)
+            {
+                ParseSingleObjectResponse(resp);
+            }
+        }
+
+
+        public void ParseSingleObjectResponse(ListObjectsResponse listResponse)
         {
             Contract.Requires(listResponse != null);
-            //Contract.Ensures()
+
             foreach (string str in listResponse.CommonPrefixes)
             {
                 Console.WriteLine("CommonPrefix: " + str);
@@ -30,11 +39,11 @@ namespace S3ClassLib
             }
             foreach (S3Object obj in listResponse.S3Objects)
             {
-                ParseSingleObject(obj);
+                ParseS3Object(obj);
             }
         }
 
-        private void ParseSingleObject(S3Object obj)
+        private void ParseS3Object(S3Object obj)
         {
                 Contract.Requires(obj != null);
 
