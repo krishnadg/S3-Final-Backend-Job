@@ -27,7 +27,6 @@ namespace S3Tests
             // Do "global" initialization here; Called before every test method.
             client = new AWSTestClient();
             teamNamesArgs = new List<string>();  
-            expectedObjectsRequests = new List<ListObjectsRequest>();
             sut = new ObjectRequestGenerator(client.GetClient(), "S3TestBucket");
 
         }
@@ -54,9 +53,9 @@ namespace S3Tests
                 var bucketNameMatches = expected[i].BucketName == result.ElementAt(i).BucketName;
                 Assert.True(bucketNameMatches, String.Format("got bucket name {0}, expected name {1} in test {2}", expected[i].BucketName, result.ElementAt(i).BucketName, testCase ));
                 var prefixMatches = expected[i].Prefix == result.ElementAt(i).Prefix;
-                Assert.True(bucketNameMatches, String.Format("got prefix name {0}, expected name {1} in test {2}", expected[i].Prefix, result.ElementAt(i).Prefix, testCase));
+                Assert.True(prefixMatches, String.Format("got prefix name {0}, expected name {1} in test {2}", expected[i].Prefix, result.ElementAt(i).Prefix, testCase));
                 var delimeterMatches = expected[i].Delimiter == result.ElementAt(i).Delimiter;
-                Assert.True(bucketNameMatches, String.Format("got delimiter name {0}, expected name {1} in test {2}", expected[i].Delimiter, result.ElementAt(i).Delimiter, testCase));
+                Assert.True(prefixMatches, String.Format("got delimiter name {0}, expected name {1} in test {2}", expected[i].Delimiter, result.ElementAt(i).Delimiter, testCase));
 
                 
             }

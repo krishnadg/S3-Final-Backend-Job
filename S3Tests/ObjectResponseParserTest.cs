@@ -51,7 +51,6 @@ namespace S3Tests
             
             listResponsesArg.Add(client.GetListResponse()); //Static List Response from AWSClient.cs
             listResponsesArg.Add(client.GetListResponse());
-            expected.Add()
             
             //ACT
 

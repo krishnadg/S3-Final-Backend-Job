@@ -147,27 +147,7 @@ namespace S3ClassLib
 
 
 
-        //ListObjectsRequest related methods
-
-        /*Return ListObjectsResponse of static prefix/delimeter
         
-        Note: Eventually add string prefix and delimeter as formal parameters here
-        */
-/*        public ListObjectsRequest GetListRequest(string bucketName)
-        {
-            ListObjectsRequest listRequest = new ListObjectsRequest();
-            listRequest.Prefix = "S3Bucket/";
-            listRequest.Delimiter = "/";
-            listRequest.BucketName = bucketName;
-            
-            return listRequest;
-        }
-*/
-
-
-
-
-
         //ListObjectsResponse related methods
 
         /*Return ListObjectsResponse of static S3Objects */

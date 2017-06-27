@@ -22,6 +22,26 @@ namespace S3ClassLib
             
         }
 
-        public void 
+        public ObjectResponseGenerator(AmazonS3Client _client)
+        {
+            client = _client;
+        }
+
+        public void ProcessListIntoResponses(List<ListObjectsRequest> listObjRequests)
+        {
+            ListObjectsResponse listResponse;
+
+            foreach (ListObjectsRequest listRequest in listObjRequests)
+            {
+                listResponse = client.ListObjectsAsync(listRequest).GetAwaiter().GetResult();
+                objResponses.Add(listResponse);
+            }
+        }
+
+        public List<ListObjectsResponse> GetObjectResponseList(List<ListObjectsRequest> listObjRequests)
+        {
+            ProcessListIntoResponses(listObjRequests);
+            return objResponses;
+        }
     }
 }
