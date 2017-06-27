@@ -10,7 +10,7 @@ namespace S3ClassLib
 {
     public class ObjectResponseParser
     {
-        //Storage for parsing ----
+        //Class for parsing ListObjectResponses data metrics into storage ----
         // k,v = (list team name, total storage)
         Dictionary<string, long> teamsStorage = new Dictionary<string, long>();
         public ObjectResponseParser()
@@ -18,16 +18,22 @@ namespace S3ClassLib
             
         }
 
+        public void ParseListObjectResponses(List<ListObjectsResponse> listObjResponses)
+        {
 
-        public void ParseObjectResponse(ListObjectsResponse listResponse)
+            foreach(ListObjectsResponse listResponse in listObjResponses)
+            {
+                ParseObjectResponse(listResponse);
+            }
+
+        }
+
+
+        private void ParseObjectResponse(ListObjectsResponse listResponse)
         {
             Contract.Requires(listResponse != null);
             //Contract.Ensures()
-            foreach (string str in listResponse.CommonPrefixes)
-            {
-                Console.WriteLine("CommonPrefix: " + str);
-
-            }
+            
             foreach (S3Object obj in listResponse.S3Objects)
             {
                 ParseSingleObject(obj);
@@ -50,7 +56,7 @@ namespace S3ClassLib
                     long updatedStorage = currentStorage + objSize;
                     teamsStorage[teamName] = updatedStorage;
                 }
-                //Add new team (key) with objects file size (value)
+                //Add new team (key) with current object's file size (value)
                 else
                 {
                     teamsStorage.Add(teamName, objSize);

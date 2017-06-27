@@ -174,12 +174,35 @@ namespace S3ClassLib
         public ListObjectsResponse GetListResponse()
         {
 
-           
+            ListObjectsResponse listResponse = new ListObjectsResponse();
+            listResponse.Prefix = "S3Bucket/Team1";
+            listResponse.Delimiter = "Team1/";
+
+            var list = AddObjectsToListResponse(new List<S3Object>());
+            listResponse.S3Objects = list;
+            return listResponse;
+        }
+
+        public ListObjectsResponse GetListResponse2()
+        {
+
             ListObjectsResponse listResponse = new ListObjectsResponse();
             listResponse.Prefix = "S3Bucket/";
             listResponse.Delimiter = "/";
 
-            var list = AddObjectsToListResponse(new List<S3Object>());
+            var list = AddObjectsToListResponse2(new List<S3Object>());
+            listResponse.S3Objects = list;
+            return listResponse;
+        }
+
+        public ListObjectsResponse GetListResponse3()
+        {
+
+            ListObjectsResponse listResponse = new ListObjectsResponse();
+            listResponse.Prefix = "S3Bucket/";
+            listResponse.Delimiter = "/";
+
+            var list = AddObjectsToListResponse3(new List<S3Object>());
             listResponse.S3Objects = list;
             return listResponse;
         }

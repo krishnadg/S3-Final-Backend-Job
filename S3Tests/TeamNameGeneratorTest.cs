@@ -35,7 +35,7 @@ namespace S3Tests
 
 
 
-    public class TestTeamNameGenerator : TeamNameGenTestsBase
+    public class TeamNameGeneratorTest : TeamNameGenTestsBase
     {
     
         [Fact]

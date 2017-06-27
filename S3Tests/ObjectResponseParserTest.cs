@@ -16,8 +16,9 @@ namespace S3Tests
     public abstract class ObjResponseTestsBase : IDisposable
     {
         protected AWSTestClient client;
+        protected List<ListObjectsResponse> listResponsesArg;
         protected Dictionary<string, long> expected;
-        protected ObjectResponseParser objParser;
+        protected ObjectResponseParser sut;
 
         protected ObjResponseTestsBase()
         {
@@ -25,7 +26,7 @@ namespace S3Tests
 
             client = new AWSTestClient();
             expected = new Dictionary<string, long>();
-            objParser = new ObjectResponseParser();
+            listResponsesArg = new List<ListObjectsResponse>();
         }
 
         public void Dispose()
@@ -39,36 +40,33 @@ namespace S3Tests
     {
 
 
-    public class TestObjectResponseParser : ObjResponseTestsBase
+    public class ObjectResponseParserTest : ObjResponseTestsBase
     {
     
-      /*   [Fact]
-        public void TestParseListResponseOnEmptyListResponse()
+        [Fact]
+        public void ParseListObjectresponses_3ListResponses_Return3Entries()
         {
-            var testResponse = new ListObjectsResponse();
-            objParser.ParseObjectResponse(testResponse);
-            var sut = objParser.GetDataStructure();
+             //ARRANGE
+            sut = new ObjectResponseParser();
             
-            Assert.Equal(expected, sut );
+            listResponsesArg.Add(client.GetListResponse()); //Static List Response from AWSClient.cs
+            listResponsesArg.Add(client.GetListResponse());
+            expected.Add()
+            
+            //ACT
+
+
+            //ASSERT
         }
         
 
         [Fact]
         public void TestParseOnListResponseSize3()
         {
-            var testResponse = client.GetListResponse();
-            objParser.ParseObjectResponse(testResponse);
-
-            var sut = objParser.GetDataStructure();
             
-            expected.Add("S3Bucket/Team1/file1", 52);
-            expected.Add("S3Bucket/Team1/file2", 90);
-            expected.Add("S3Bucket/Team1/file3", 431);
-
-            Assert.Equal(expected, sut);
 
         }
-        */
+        
     }
 }
 }
