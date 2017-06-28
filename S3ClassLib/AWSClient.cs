@@ -58,6 +58,19 @@ namespace S3ClassLib
 
         }
 
+        public void CreateBucket1Team(string bucketName)
+        {
+            client.PutBucketAsync(bucketName);
+            InitializeFilesInBucket1Team(bucketName);
+
+        }
+
+         private void InitializeFilesInBucket1Team(string bucketName)
+        {
+            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile");
+            
+        }
+
 
         public void CreateBucket1(string bucketName)
         {
@@ -65,6 +78,8 @@ namespace S3ClassLib
             InitializeFilesInBucket1(bucketName);
 
         }
+
+        
 
         private void InitializeFilesInBucket1(string bucketName)
         {
@@ -89,9 +104,9 @@ namespace S3ClassLib
             PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile2");
             PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile3");
 
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/mediumsizefile");
             PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile");
             PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile2");
+            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile3");
 
         
 
@@ -155,11 +170,12 @@ namespace S3ClassLib
         {
 
             ListObjectsResponse listResponse = new ListObjectsResponse();
-            listResponse.Prefix = "S3Bucket/Team1";
-            listResponse.Delimiter = "Team1/";
+            
 
             var list = AddObjectsToListResponse(new List<S3Object>());
             listResponse.S3Objects = list;
+            listResponse.Prefix = "S3Bucket/Team1/";
+
             return listResponse;
         }
 
@@ -167,11 +183,12 @@ namespace S3ClassLib
         {
 
             ListObjectsResponse listResponse = new ListObjectsResponse();
-            listResponse.Prefix = "S3Bucket/";
-            listResponse.Delimiter = "/";
+            
 
             var list = AddObjectsToListResponse2(new List<S3Object>());
             listResponse.S3Objects = list;
+            listResponse.Prefix = "S3Bucket/Team2/";
+
             return listResponse;
         }
 
@@ -179,11 +196,10 @@ namespace S3ClassLib
         {
 
             ListObjectsResponse listResponse = new ListObjectsResponse();
-            listResponse.Prefix = "S3Bucket/";
-            listResponse.Delimiter = "/";
-
+            
             var list = AddObjectsToListResponse3(new List<S3Object>());
             listResponse.S3Objects = list;
+            listResponse.Prefix = "S3Bucket/Team3/";
             return listResponse;
         }
 
@@ -192,13 +208,13 @@ namespace S3ClassLib
         {
             var s3Object1 = new S3Object();
             s3Object1.Key = "S3Bucket/Team1/file1";
-            s3Object1.Size = 52;
+            s3Object1.Size = 194;
             var s3Object2 = new S3Object();
             s3Object2.Key = "S3Bucket/Team1/file2";
-            s3Object2.Size = 90;
+            s3Object2.Size = 321;
             var s3Object3 = new S3Object();
             s3Object3.Key = "S3Bucket/Team1/file3";
-            s3Object3.Size = 431;
+            s3Object3.Size = 601;
 
             objects.Add(s3Object1);
             objects.Add(s3Object2);
@@ -211,13 +227,13 @@ namespace S3ClassLib
         public List<S3Object> AddObjectsToListResponse2(List<S3Object> objects)
         {
             var s3Object1 = new S3Object();
-            s3Object1.Key = "S3Bucket/Team1/file1";
+            s3Object1.Key = "S3Bucket/Team2/file1";
             s3Object1.Size = 52;
             var s3Object2 = new S3Object();
-            s3Object2.Key = "S3Bucket/Team2/file1";
+            s3Object2.Key = "S3Bucket/Team2/file2";
             s3Object2.Size = 90;
             var s3Object3 = new S3Object();
-            s3Object3.Key = "S3Bucket/Team2/file2";
+            s3Object3.Key = "S3Bucket/Team2/file3";
             s3Object3.Size = 431;
 
             objects.Add(s3Object1);
@@ -231,14 +247,14 @@ namespace S3ClassLib
           public List<S3Object> AddObjectsToListResponse3(List<S3Object> objects)
         {
             var s3Object1 = new S3Object();
-            s3Object1.Key = "S3Bucket/Team1/file1";
-            s3Object1.Size = 52;
+            s3Object1.Key = "S3Bucket/Team3/file1";
+            s3Object1.Size = 100024;
             var s3Object2 = new S3Object();
-            s3Object2.Key = "S3Bucket/Team2/file1";
-            s3Object2.Size = 90;
+            s3Object2.Key = "S3Bucket/Team3/file2";
+            s3Object2.Size = 123412;
             var s3Object3 = new S3Object();
-            s3Object3.Key = "S3Bucket/Team3/file1";
-            s3Object3.Size = 431;
+            s3Object3.Key = "S3Bucket/Team3/file3";
+            s3Object3.Size = 5442;
 
             objects.Add(s3Object1);
             objects.Add(s3Object2);

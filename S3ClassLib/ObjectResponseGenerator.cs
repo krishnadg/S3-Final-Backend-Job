@@ -16,7 +16,6 @@ namespace S3ClassLib
         AmazonS3Client client;
 
         List<ListObjectsResponse> objResponses = new List<ListObjectsResponse>();
-        string bucket;
         public ObjectResponseGenerator()
         {
             
@@ -33,8 +32,10 @@ namespace S3ClassLib
 
             foreach (ListObjectsRequest listRequest in listObjRequests)
             {
+
                 listResponse = client.ListObjectsAsync(listRequest).GetAwaiter().GetResult();
                 objResponses.Add(listResponse);
+                
             }
         }
 

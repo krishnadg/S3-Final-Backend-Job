@@ -47,33 +47,39 @@ namespace S3Tests
         public void ListObjResponsesAreSame(List<ListObjectsResponse> expected, IOrderedEnumerable<ListObjectsResponse> result, String testCase)
         {  
             var countMatches = expected.Count == result.Count();
-            Assert.True(countMatches, String.Format("expected count {0}, got count {1}", expected.Count, result.Count() ));
+            Assert.True(countMatches, String.Format("expected list count {0}, got list count {1}", expected.Count, result.Count() ));
 
             for (int i = 0; i < expected.Count; i++)
             {
                 var bucketNameMatches = expected[i].Name == result.ElementAt(i).Name;
                 Assert.True(bucketNameMatches, String.Format("expected bucket name {0}, got name {1} in test {2}", expected[i].Name, result.ElementAt(i).Name, testCase ));
-                var httpStatusCodeMatches = expected[i].HttpStatusCode == result.ElementAt(i).HttpStatusCode;
-                Assert.True(httpStatusCodeMatches, String.Format("expected HTTP Status Code {0}, got code {1} in test {2}", expected[i].HttpStatusCode, result.ElementAt(i).HttpStatusCode, testCase));
+                //var httpStatusCodeMatches = expected[i].HttpStatusCode == result.ElementAt(i).HttpStatusCode;
+                //Assert.True(httpStatusCodeMatches, String.Format("expected HTTP Status Code {0}, got code {1} in test {2}", expected[i].HttpStatusCode, result.ElementAt(i).HttpStatusCode, testCase));
                 var isTruncated = expected[i].IsTruncated == result.ElementAt(i).IsTruncated;
-                Assert.True(isTruncated, String.Format("expected delimiter name {0}, got name {1} in test {2}", expected[i].IsTruncated, result.ElementAt(i).IsTruncated, testCase));
-                S3ObjectsAreSame(expected[i].S3Objects, result.ElementAt(i).S3Objects, testCase);
+                Assert.True(isTruncated, String.Format("expected is truncated {0}, got is truncated {1} in test {2}", expected[i].IsTruncated, result.ElementAt(i).IsTruncated, testCase));
+                S3ObjectsAreSame(expected[i].S3Objects, result.ElementAt(i).S3Objects.OrderBy(x => x.Key), testCase);
+                //Assert.Equal(expected[i].CommonPrefixes, result.ElementAt(i).CommonPrefixes);
+
+                 
             }
 
         }
 
         /*Test Helper method comparing 2 Lists of S3Objects */
-        public void S3ObjectsAreSame(List<S3Object> expected, List<S3Object> result, string testCase)
+        public void S3ObjectsAreSame(List<S3Object> expected, IOrderedEnumerable<S3Object> result, string testCase)
         {
-            var countMatches = expected.Count == result.Count;
-            Assert.True(countMatches, String.Format("expected count {0}, got count {1}", expected.Count, result.Count));
-
+            var result2 = result.OrderBy(x => x.Key);
+            var countMatches = expected.Count == result.Count();
+            Assert.True(countMatches, String.Format("expected object count {0}, got object count {1}", expected.Count, result.Count()));
+            
             for (int i = 0; i < expected.Count; i++)
             {
-                var keyMatches = expected[i].Key == result[i].Key;
-                Assert.True(keyMatches, String.Format("expected key name {0}, got name {1} in test {2} loop count {3}", expected[i].Key, result[i].Key, testCase, + i ));
-                var sizeMatches = expected[i].Size == result[i].Size;
-                Assert.True(keyMatches, String.Format("expected size {0}, got size {1} in test {2} loop count {3}", expected[i].Size, result[i].Size, testCase, i ));
+                //Check Matching Keys
+                var keyMatches = expected[i].Key == result.ElementAt(i).Key;
+                Assert.True(keyMatches, String.Format("expected key name {0}, got name {1} in test {2} loop count {3}", expected[i].Key, result.ElementAt(i).Key, testCase,  i ));
+                //If sizes were present, compare known file size vs actual
+                var sizeMatches = expected[i].Size == result.ElementAt(i).Size;
+                Assert.True(keyMatches, String.Format("expected size {0}, got size {1} in test {2} loop count {3}", expected[i].Size, result.ElementAt(i).Size, testCase, i ));
 
 
             }
@@ -82,25 +88,94 @@ namespace S3Tests
 
 
         [Fact]
-        public void GetObjectResponseList_2ObjectRequests_ReturnList2Responses()
+        public void GetObjectResponseList_1ListObjectRequests_ReturnList1Response()
         {
             //ARRANGE
-            client.CreateBucket2("S3TestBucket2");
+            client.CreateBucket2("S3TestBucket2b");
             sut = new ObjectResponseGenerator(client.GetClient());
             
             objRequestArgs = new List<ListObjectsRequest>
             {
                 new ListObjectsRequest 
                 {
-                BucketName = "S3TestBucket2",
-                Prefix = "S3Bucket/",
-                Delimiter = "Team1/",
+                BucketName = "S3TestBucket2b",
+                Prefix = "S3Bucket/Team1",
+                }
+                              
+            };
+
+            expectedObjectResponses = new List<ListObjectsResponse>
+            {
+                new ListObjectsResponse
+                {
+                    Name = "S3TestBucket2b",
+                    Prefix = "S3Bucket/Team1",
+                    S3Objects = new List<S3Object>
+                    {
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2b",
+                            Key = "S3Bucket/Team1/smallsizefile",
+                            
+                        },
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2b",
+                            Key = "S3Bucket/Team1/smallsizefile2"
+                        },
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2b",
+                            Key = "S3Bucket/Team1/smallsizefile3"
+                        }
+
+
+                    },
+                   
+                },
+              
+
+            };
+
+            
+            //ACT
+            var result = sut.GetObjectResponseList(objRequestArgs).OrderBy(x => x.S3Objects[0].Key);
+            
+            //ASSERT
+            ListObjResponsesAreSame(expectedObjectResponses, result, "1");
+        }
+
+
+
+
+        [Fact]
+        public void GetObjectResponseList_4ListObjectRequests_ReturnList4Responses()
+        {
+            //ARRANGE
+            client.CreateBucket3("S3TestBucket2c");
+            sut = new ObjectResponseGenerator(client.GetClient());
+            
+            objRequestArgs = new List<ListObjectsRequest>
+            {
+                new ListObjectsRequest 
+                {
+                BucketName = "S3TestBucket2c",
+                Prefix = "S3Bucket/Team1/",
                 
                 },
                 new ListObjectsRequest{
-                BucketName = "S3TestBucket2",
-                Prefix = "S3Bucket/",
-                Delimiter = "Team2/"
+                BucketName = "S3TestBucket2c",
+                Prefix = "S3Bucket/Team2/",
+                },
+                new ListObjectsRequest
+                {
+                    BucketName = "S3TestBucket2c",
+                    Prefix = "S3Bucket/Team3/"
+                },
+                new ListObjectsRequest
+                {
+                    BucketName = "S3TestBucket2c",
+                    Prefix = "S3Bucket/Team4/"
                 }
                 
             };
@@ -109,68 +184,100 @@ namespace S3Tests
             {
                 new ListObjectsResponse
                 {
-                    S3Objects = new List<S3Object>
-                    {
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2",
-                            Key = "S3Bucket/Team1/smallsizefile"
-                        }
-
-                    },
-                    CommonPrefixes = new List<string>
-                    {
-
-                    }
-                },
-                new ListObjectsResponse
-                {
+                    Name = "S3TestBucket2c",
                     
                     S3Objects = new List<S3Object>
                     {
                         new S3Object
                         {
-                            BucketName = "S3TestBucket2",
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team1/smallsizefile",
+                        },
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team1/smallsizefile2"
+                        },
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team1/smallsizefile3"
+                        }
+
+
+                    },
+                   
+                },
+                new ListObjectsResponse
+                {
+                    Name = "S3TestBucket2c",
+                    S3Objects = new List<S3Object>
+                    {
+                         new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team2/largesizefile",
+                        },
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team2/largesizefile2"
+                        },
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team2/largesizefile3"
+                        },
+                        new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team2/mediumsizefile"
                         }
 
                     },
-
-                    CommonPrefixes = new List<string>
+                    
+                    
+                },
+                new ListObjectsResponse
+                {
+                    Name = "S3TestBucket2c",
+                    S3Objects = new List<S3Object>
                     {
-
+                         new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team3/smallsizefile",
+                        },
                     }
                 },
+                new ListObjectsResponse
+                {
+                    Name = "S3TestBucket2c",
+                    S3Objects = new List<S3Object>
+                    {
+                         new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team4/largesizefile2",
+                        },
+                         new S3Object
+                        {
+                            BucketName = "S3TestBucket2c",
+                            Key = "S3Bucket/Team4/largesizefile3",
+                        },
+                    }
+                }
 
             };
 
             
             //ACT
-          //  var result = sut.GetObjectRequestList(teamNamesArgs).OrderBy(x => x.BucketName);
-
-            var result = sut.GetObjectResponseList(objRequestArgs).OrderBy(x => x.Name);
+            var result = sut.GetObjectResponseList(objRequestArgs).OrderBy(x => x.S3Objects[0].Key);
             
             //ASSERT
-
-           
-
-            ListObjResponsesAreSame(expectedObjectResponses, result, "1");
-
+            ListObjResponsesAreSame(expectedObjectResponses, result, "2");
         }
 
 
-        [Fact]
-        public void GetObjectRequestList_1TeamName_ReturnList1Request()
-        {
-        }
-
-
-    
-        [Fact]
-        public void GetObjectRequestList_4TeamNames_ReturnList4Requests()
-        {
-            
-        }
-             
-        
     }
 }

@@ -20,34 +20,37 @@ namespace S3ClassLib
 
         public void ParseListObjectResponses(List<ListObjectsResponse> listObjResponses)
         {
+            //Change this value based on the name of the bucket stored in, ex "TestBucket/teamname/files", lengthOfBucketname = 11
+            int lengthOfBucketname = 9;
 
             foreach(ListObjectsResponse listResponse in listObjResponses)
             {
-                ParseObjectResponse(listResponse);
+                //Team name = Entire prefix (ex. "s3bucket/team1/") minus bucket name ("s3bucket/") leaving team name ("team1/"), minus 1 for '/' leaves "team1"
+                string teamName = listResponse.Prefix.Substring(lengthOfBucketname, listResponse.Prefix.Length - lengthOfBucketname - 1);
+                
+                ParseObjectResponse(listResponse, teamName);
             }
 
         }
 
 
-        private void ParseObjectResponse(ListObjectsResponse listResponse)
+        private void ParseObjectResponse(ListObjectsResponse listResponse, string teamName)
         {
             Contract.Requires(listResponse != null);
             //Contract.Ensures()
             
             foreach (S3Object obj in listResponse.S3Objects)
             {
-                ParseSingleObject(obj);
+                ParseSingleObject(obj, teamName);
             }
         }
 
-        private void ParseSingleObject(S3Object obj)
+        private void ParseSingleObject(S3Object obj, string teamName)
         {
                 Contract.Requires(obj != null);
 
-                string teamName = obj.Key;
                 
                 long objSize = obj.Size;
-                Console.WriteLine("Key: " + teamName);
 
                 //Add to previously calculated size (value) for specified team (key)
                 if (teamsStorage.ContainsKey(teamName))
@@ -64,8 +67,9 @@ namespace S3ClassLib
         }
 
 
-        public Dictionary<string, long> GetDataStructure()
+        public Dictionary<string, long> GetDataStructure(List<ListObjectsResponse> listObjResponses)
         {
+            ParseListObjectResponses(listObjResponses);
             return teamsStorage;
         }
 

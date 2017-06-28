@@ -27,7 +27,7 @@ namespace S3ClassLib
             bucket = bucketName;
         }
 
-         public TeamNameGenerator(AmazonS3Client _client, string bucketName)
+        public TeamNameGenerator(AmazonS3Client _client, string bucketName)
         {
             client = _client;
             bucket = bucketName;
@@ -59,8 +59,9 @@ namespace S3ClassLib
                 // Get listResponse for up to 1000 files after marker
                 listResponse = client.ListObjectsAsync(listRequest).GetAwaiter().GetResult();
                 //Exit if null, no files in bucket
-                if (listResponse is null)
+                if (listResponse.CommonPrefixes is null || listResponse.CommonPrefixes.Count is 0)
                 {
+                    Console.WriteLine("no prefixes");
                     return;
                 }
                 //Add in each unique team name

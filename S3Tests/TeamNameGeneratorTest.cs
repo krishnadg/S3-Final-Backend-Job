@@ -51,6 +51,24 @@ namespace S3Tests
             //ASSERT
             Assert.Equal(expectedTeamNames, result);
         }
+
+         [Fact]
+        public void GetListOfTeamNames_1Team1File_Return1Teams()
+        {
+            //ARRANGE
+            client.CreateBucket1Team("S3TestBucket1b");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TestBucket1b");
+
+            expectedTeamNames.Add("Team1");
+
+
+            //ACT
+            var result = sut.GetListOfTeamNames();
+            
+
+           //ASSERT
+            Assert.Equal(expectedTeamNames, result);
+        }
         
 
         [Fact]

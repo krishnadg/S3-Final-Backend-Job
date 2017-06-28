@@ -91,8 +91,7 @@ namespace S3Tests
             expectedObjectsRequests = new List<ListObjectsRequest> {
                 new ListObjectsRequest{
                 BucketName = "S3TestBucket0",
-                Prefix = "S3Bucket/",
-                Delimiter = "Team1/",
+                Prefix = "S3Bucket/Team1/",
                 }
             };
             
@@ -119,24 +118,20 @@ namespace S3Tests
             expectedObjectsRequests = new List<ListObjectsRequest> {
                 new ListObjectsRequest{
                 BucketName = "S3TestBucket0",
-                Prefix = "S3Bucket/",
-                Delimiter = "Team1/",
+                Prefix = "S3Bucket/Team1/",
                 
                 },
                 new ListObjectsRequest{
                 BucketName = "S3TestBucket0",
-                Prefix = "S3Bucket/",
-                Delimiter = "Team2/"
+                Prefix = "S3Bucket/Team2/",
                 },
                 new ListObjectsRequest{
                 BucketName = "S3TestBucket0",
-                Prefix = "S3Bucket/",
-                Delimiter = "Team3/"
+                Prefix = "S3Bucket/Team3/",
                 },
                 new ListObjectsRequest{
                 BucketName = "S3TestBucket0",
-                Prefix = "S3Bucket/",
-                Delimiter = "Team4/"
+                Prefix = "S3Bucket/Team4/",
                 }   
             };
            

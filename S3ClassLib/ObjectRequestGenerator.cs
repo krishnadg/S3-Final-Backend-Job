@@ -42,8 +42,7 @@ namespace S3ClassLib
                 listRequest = new ListObjectsRequest
                 {
                     BucketName = bucket,
-                    Prefix = "S3Bucket/",
-                    Delimiter = team + "/"
+                    Prefix = "S3Bucket/" + team + "/",
                 };
 
                 objRequests.Add(listRequest);
