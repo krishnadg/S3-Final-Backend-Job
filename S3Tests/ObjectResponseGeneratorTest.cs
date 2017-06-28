@@ -68,7 +68,7 @@ namespace S3Tests
             var countMatches = expected.Count == result.Count;
             Assert.True(countMatches, String.Format("got count {0}, expected count {1}", expected.Count, result.Count));
 
-            for (int i = 0; i < expected.Count)
+            for (int i = 0; i < expected.Count; i++)
             {
                 var keyMatches = expected[i].Key == result.ElementAt(i).Key;
                 Assert.True(keyMatches, String.Format("got bucket name {0}, expected name {1} in test {2}", expected[i].Key, result[i].Key, testCase ));
