@@ -46,16 +46,16 @@ namespace S3Tests
         public void IsSame(List<ListObjectsRequest> expected, IOrderedEnumerable<ListObjectsRequest> result, String testCase)
         {  
             var countMatches = expected.Count == result.Count();
-            Assert.True(countMatches, String.Format("got count {0}, expected count {1}", expected.Count, result.Count() ));
+            Assert.True(countMatches, String.Format("expected count {0}, got count {1}", expected.Count, result.Count() ));
 
             for (int i = 0; i < expected.Count; i++)
             {
                 var bucketNameMatches = expected[i].BucketName == result.ElementAt(i).BucketName;
-                Assert.True(bucketNameMatches, String.Format("got bucket name {0}, expected name {1} in test {2}", expected[i].BucketName, result.ElementAt(i).BucketName, testCase ));
+                Assert.True(bucketNameMatches, String.Format("expected bucket name {0}, got name {1} in test {2}", expected[i].BucketName, result.ElementAt(i).BucketName, testCase ));
                 var prefixMatches = expected[i].Prefix == result.ElementAt(i).Prefix;
-                Assert.True(prefixMatches, String.Format("got prefix name {0}, expected name {1} in test {2}", expected[i].Prefix, result.ElementAt(i).Prefix, testCase));
+                Assert.True(prefixMatches, String.Format("expected prefix name {0}, got name {1} in test {2}", expected[i].Prefix, result.ElementAt(i).Prefix, testCase));
                 var delimeterMatches = expected[i].Delimiter == result.ElementAt(i).Delimiter;
-                Assert.True(prefixMatches, String.Format("got delimiter name {0}, expected name {1} in test {2}", expected[i].Delimiter, result.ElementAt(i).Delimiter, testCase));
+                Assert.True(prefixMatches, String.Format("expected delimiter name {0}, got name {1} in test {2}", expected[i].Delimiter, result.ElementAt(i).Delimiter, testCase));
 
                 
             }

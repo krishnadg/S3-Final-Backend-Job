@@ -47,16 +47,16 @@ namespace S3Tests
         public void ListObjResponsesAreSame(List<ListObjectsResponse> expected, IOrderedEnumerable<ListObjectsResponse> result, String testCase)
         {  
             var countMatches = expected.Count == result.Count();
-            Assert.True(countMatches, String.Format("got count {0}, expected count {1}", expected.Count, result.Count() ));
+            Assert.True(countMatches, String.Format("expected count {0}, got count {1}", expected.Count, result.Count() ));
 
             for (int i = 0; i < expected.Count; i++)
             {
                 var bucketNameMatches = expected[i].Name == result.ElementAt(i).Name;
-                Assert.True(bucketNameMatches, String.Format("got bucket name {0}, expected name {1} in test {2}", expected[i].Name, result.ElementAt(i).Name, testCase ));
+                Assert.True(bucketNameMatches, String.Format("expected bucket name {0}, got name {1} in test {2}", expected[i].Name, result.ElementAt(i).Name, testCase ));
                 var httpStatusCodeMatches = expected[i].HttpStatusCode == result.ElementAt(i).HttpStatusCode;
-                Assert.True(httpStatusCodeMatches, String.Format("got HTTP Status Code {0}, expected code {1} in test {2}", expected[i].HttpStatusCode, result.ElementAt(i).HttpStatusCode, testCase));
+                Assert.True(httpStatusCodeMatches, String.Format("expected HTTP Status Code {0}, got code {1} in test {2}", expected[i].HttpStatusCode, result.ElementAt(i).HttpStatusCode, testCase));
                 var isTruncated = expected[i].IsTruncated == result.ElementAt(i).IsTruncated;
-                Assert.True(isTruncated, String.Format("got delimiter name {0}, expected name {1} in test {2}", expected[i].IsTruncated, result.ElementAt(i).IsTruncated, testCase));
+                Assert.True(isTruncated, String.Format("expected delimiter name {0}, got name {1} in test {2}", expected[i].IsTruncated, result.ElementAt(i).IsTruncated, testCase));
                 S3ObjectsAreSame(expected[i].S3Objects, result.ElementAt(i).S3Objects, testCase);
             }
 
@@ -66,12 +66,14 @@ namespace S3Tests
         public void S3ObjectsAreSame(List<S3Object> expected, List<S3Object> result, string testCase)
         {
             var countMatches = expected.Count == result.Count;
-            Assert.True(countMatches, String.Format("got count {0}, expected count {1}", expected.Count, result.Count));
+            Assert.True(countMatches, String.Format("expected count {0}, got count {1}", expected.Count, result.Count));
 
             for (int i = 0; i < expected.Count; i++)
             {
-                var keyMatches = expected[i].Key == result.ElementAt(i).Key;
-                Assert.True(keyMatches, String.Format("got bucket name {0}, expected name {1} in test {2}", expected[i].Key, result[i].Key, testCase ));
+                var keyMatches = expected[i].Key == result[i].Key;
+                Assert.True(keyMatches, String.Format("expected key name {0}, got name {1} in test {2} loop count {3}", expected[i].Key, result[i].Key, testCase, + i ));
+                var sizeMatches = expected[i].Size == result[i].Size;
+                Assert.True(keyMatches, String.Format("expected size {0}, got size {1} in test {2} loop count {3}", expected[i].Size, result[i].Size, testCase, i ));
 
 
             }
@@ -149,10 +151,9 @@ namespace S3Tests
             
             //ASSERT
 
-            Console.WriteLine("S3Objects Count: " + result.ElementAt(0).S3Objects.Count);
-            Console.WriteLine("Bucketname: " + result.ElementAt(0).Name);
+           
 
-          //  ListObjResponsesAreSame()
+            ListObjResponsesAreSame(expectedObjectResponses, result, "1");
 
         }
 
