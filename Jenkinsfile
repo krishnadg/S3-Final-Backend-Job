@@ -23,7 +23,7 @@ stage ('Test') {
 			container('dotnet-core') {
 
 				checkout scm
-				sh 'dotnet test S3Tests/S3Tests.csproj'
+				sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj'
 			}
 		}
 	}
