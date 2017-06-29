@@ -6,7 +6,7 @@ properties([
 ])
 
 
-stage ('Deploy') {
+stage ('Test') {
 	podTemplate(
 		label: 'dotnet-core-pod',
 		containers: [
@@ -23,7 +23,7 @@ stage ('Deploy') {
 			container('dotnet-core') {
 
 				checkout scm
-				sh 'echo "hello"'
+				sh 'dotnet test S3Tests/S3Tests.csproj'
 			}
 		}
 	}
