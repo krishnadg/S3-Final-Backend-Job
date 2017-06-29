@@ -15,14 +15,14 @@ namespace S3Tests
 
     public abstract class TeamNameGenTestsBase : IDisposable
     {   
-        protected AWSTestClient client;
+        protected AWSClientTest client;
         protected List<string> expectedTeamNames;
 
         protected TeamNameGenerator sut;
         protected TeamNameGenTestsBase()
         {
             // Do "global" initialization here; Called before every test method.
-            client = new AWSTestClient();
+            client = new AWSClientTest();
             expectedTeamNames = new List<string>();
 
         }
@@ -30,6 +30,7 @@ namespace S3Tests
         public void Dispose()
         {
             // Do "global" teardown here; Called after every test method.
+
         }
     } 
 
@@ -42,8 +43,8 @@ namespace S3Tests
         public void GetListOfTeamNames_0Teams0Files_ReturnEmpty()
         {
             //ARRANGE
-            client.CreateBucket0("S3TestBucket0");
-            sut = new TeamNameGenerator(client.GetClient(), "S3TestBucket0");
+            client.CreateEmptyBucket("S3TeamNameGenTestBucket0N");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket0N");
 
             //ACT
             var result = sut.GetListOfTeamNames();
@@ -56,8 +57,8 @@ namespace S3Tests
         public void GetListOfTeamNames_1Team1File_Return1Teams()
         {
             //ARRANGE
-            client.CreateBucket1Team("S3TestBucket1b");
-            sut = new TeamNameGenerator(client.GetClient(), "S3TestBucket1b");
+            client.CreateBucket1Team1File("S3TeamNameGenTestBucket1T1F");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket1T1F");
 
             expectedTeamNames.Add("Team1");
 
@@ -75,8 +76,8 @@ namespace S3Tests
         public void GetListOfTeamNames_3Teams1FileEach_Return3Teams()
         {
             //ARRANGE
-            client.CreateBucket1("S3TestBucket1");
-            sut = new TeamNameGenerator(client.GetClient(), "S3TestBucket1");
+            client.CreateBucket3Teams1FileEach("S3TeamNameGenTestBucket3T1F");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket3T1F");
 
             expectedTeamNames.Add("Team1");
             expectedTeamNames.Add("Team2");
@@ -94,8 +95,8 @@ namespace S3Tests
         public void GetListOfTeamNames_2Teams3FilesEach_Return2Teams()
         {
             //ARRANGE
-            client.CreateBucket2("S3TestBucket2a");
-            sut = new TeamNameGenerator(client.GetClient(), "S3TestBucket2a");
+            client.CreateBucket2Teams3FilesEach("S3TeamNameGenTestBucket2T3F");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket2T3F");
 
             expectedTeamNames.Add("Team1");
             expectedTeamNames.Add("Team2");
@@ -112,8 +113,8 @@ namespace S3Tests
         public void GetListOfTeamNames_4TeamsVariousFilesEach_Return4Teams()
         {
             //ARRANGE
-            client.CreateBucket3("S3TestBucket3");
-            sut = new TeamNameGenerator(client.GetClient(), "S3TestBucket3");
+            client.CreateBucket4TeamsMultipleFilesEach("S3TeamNameGenTestBucket4TVF");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket4TVF");
 
             expectedTeamNames.Add("Team1");
             expectedTeamNames.Add("Team2");

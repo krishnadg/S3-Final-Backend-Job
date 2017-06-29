@@ -18,7 +18,7 @@ namespace S3ClassLib
             
         }
 
-        public void ParseListObjectResponses(List<ListObjectsResponse> listObjResponses)
+        private void ParseListObjectResponses(List<ListObjectsResponse> listObjResponses)
         {
             //Change this value based on the name of the bucket stored in, ex "TestBucket/teamname/files", lengthOfBucketname = 11
             int lengthOfBucketname = 9;
@@ -36,8 +36,7 @@ namespace S3ClassLib
 
         private void ParseObjectResponse(ListObjectsResponse listResponse, string teamName)
         {
-            Contract.Requires(listResponse != null);
-            //Contract.Ensures()
+            Contract.Requires(listResponse != null);            
             
             foreach (S3Object obj in listResponse.S3Objects)
             {
@@ -51,7 +50,6 @@ namespace S3ClassLib
 
                 
                 long objSize = obj.Size;
-
                 //Add to previously calculated size (value) for specified team (key)
                 if (teamsStorage.ContainsKey(teamName))
                 {
@@ -67,6 +65,7 @@ namespace S3ClassLib
         }
 
 
+        //Parse the list of object responses, return the data structure
         public Dictionary<string, long> GetDataStructure(List<ListObjectsResponse> listObjResponses)
         {
             ParseListObjectResponses(listObjResponses);
@@ -74,13 +73,12 @@ namespace S3ClassLib
         }
 
 
-
+        //For console printing/test purposes only, not meant for deployment
         public void PrintData()
         {
-            foreach (KeyValuePair<string, long> kvp in teamsStorage)
+            foreach (KeyValuePair<string, long> teamInfo in teamsStorage)
             {
-            //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                Console.WriteLine("Key = {0}, Value = {1}", teamInfo.Key, teamInfo.Value);
             }
         
         }

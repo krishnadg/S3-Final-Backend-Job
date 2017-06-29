@@ -16,7 +16,7 @@ namespace S3Tests
 
     public abstract class ObjResponseGenTestsBase : IDisposable
     {   
-        protected AWSTestClient client;
+        protected AWSClientTest client;
         protected List<ListObjectsResponse> expectedObjectResponses;
 
         protected List<ListObjectsRequest> objRequestArgs;
@@ -25,7 +25,7 @@ namespace S3Tests
         protected ObjResponseGenTestsBase()
         {
             // Do "global" initialization here; Called before every test method.
-            client = new AWSTestClient();
+            client = new AWSClientTest();
             objRequestArgs = new List<ListObjectsRequest>();
             expectedObjectResponses = new List<ListObjectsResponse>();
         }
@@ -33,7 +33,6 @@ namespace S3Tests
         public void Dispose()
         {
             // Do "global" teardown here; Called after every test method.
-          //  client.RemoveBucketFromS3("S3TestBucket");
         }
     } 
 
@@ -51,14 +50,12 @@ namespace S3Tests
 
             for (int i = 0; i < expected.Count; i++)
             {
-                var bucketNameMatches = expected[i].Name == result.ElementAt(i).Name;
-                Assert.True(bucketNameMatches, String.Format("expected bucket name {0}, got name {1} in test {2}", expected[i].Name, result.ElementAt(i).Name, testCase ));
+                
                 //var httpStatusCodeMatches = expected[i].HttpStatusCode == result.ElementAt(i).HttpStatusCode;
                 //Assert.True(httpStatusCodeMatches, String.Format("expected HTTP Status Code {0}, got code {1} in test {2}", expected[i].HttpStatusCode, result.ElementAt(i).HttpStatusCode, testCase));
                 var isTruncated = expected[i].IsTruncated == result.ElementAt(i).IsTruncated;
                 Assert.True(isTruncated, String.Format("expected is truncated {0}, got is truncated {1} in test {2}", expected[i].IsTruncated, result.ElementAt(i).IsTruncated, testCase));
                 S3ObjectsAreSame(expected[i].S3Objects, result.ElementAt(i).S3Objects.OrderBy(x => x.Key), testCase);
-                //Assert.Equal(expected[i].CommonPrefixes, result.ElementAt(i).CommonPrefixes);
 
                  
             }
@@ -70,72 +67,34 @@ namespace S3Tests
         {
             var result2 = result.OrderBy(x => x.Key);
             var countMatches = expected.Count == result.Count();
-            Assert.True(countMatches, String.Format("expected object count {0}, got object count {1}", expected.Count, result.Count()));
+            Assert.True(countMatches, String.Format("expected object count {0}, got object count {1} in test {2}", expected.Count, result.Count(), testCase));
             
             for (int i = 0; i < expected.Count; i++)
             {
                 //Check Matching Keys
                 var keyMatches = expected[i].Key == result.ElementAt(i).Key;
                 Assert.True(keyMatches, String.Format("expected key name {0}, got name {1} in test {2} loop count {3}", expected[i].Key, result.ElementAt(i).Key, testCase,  i ));
-                //If sizes were present, compare known file size vs actual
+                
+                //If sizes were present, compare known file size vs actual (test cases would need to know these sizes)
+                /*
                 var sizeMatches = expected[i].Size == result.ElementAt(i).Size;
                 Assert.True(keyMatches, String.Format("expected size {0}, got size {1} in test {2} loop count {3}", expected[i].Size, result.ElementAt(i).Size, testCase, i ));
-
+                */
 
             }
         }
 
 
-
         [Fact]
-        public void GetObjectResponseList_1ListObjectRequests_ReturnList1Response()
+        public void GetObjectResponseList_0ListObjectRequests_ReturnEmptyList()
         {
             //ARRANGE
-            client.CreateBucket2("S3TestBucket2b");
+            client.CreateEmptyBucket("S3ResponseGenTestBucket0RQ");
             sut = new ObjectResponseGenerator(client.GetClient());
             
-            objRequestArgs = new List<ListObjectsRequest>
-            {
-                new ListObjectsRequest 
-                {
-                BucketName = "S3TestBucket2b",
-                Prefix = "S3Bucket/Team1",
-                }
-                              
-            };
+            objRequestArgs = new List<ListObjectsRequest>();
 
-            expectedObjectResponses = new List<ListObjectsResponse>
-            {
-                new ListObjectsResponse
-                {
-                    Name = "S3TestBucket2b",
-                    Prefix = "S3Bucket/Team1",
-                    S3Objects = new List<S3Object>
-                    {
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2b",
-                            Key = "S3Bucket/Team1/smallsizefile",
-                            
-                        },
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2b",
-                            Key = "S3Bucket/Team1/smallsizefile2"
-                        },
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2b",
-                            Key = "S3Bucket/Team1/smallsizefile3"
-                        }
-
-
-                    },
-                   
-                },
-              
-
-            };
+            expectedObjectResponses = new List<ListObjectsResponse>();
 
             
             //ACT
@@ -147,127 +106,23 @@ namespace S3Tests
 
 
 
-
         [Fact]
-        public void GetObjectResponseList_4ListObjectRequests_ReturnList4Responses()
+        public void GetObjectResponseList_1ListObjectRequests_ReturnList1Response()
         {
             //ARRANGE
-            client.CreateBucket3("S3TestBucket2c");
+            client.CreateBucket1Team1File("S3ResponseGenTestBucket1RQ");
             sut = new ObjectResponseGenerator(client.GetClient());
             
             objRequestArgs = new List<ListObjectsRequest>
             {
-                new ListObjectsRequest 
-                {
-                BucketName = "S3TestBucket2c",
-                Prefix = "S3Bucket/Team1/",
-                
-                },
-                new ListObjectsRequest{
-                BucketName = "S3TestBucket2c",
-                Prefix = "S3Bucket/Team2/",
-                },
-                new ListObjectsRequest
-                {
-                    BucketName = "S3TestBucket2c",
-                    Prefix = "S3Bucket/Team3/"
-                },
-                new ListObjectsRequest
-                {
-                    BucketName = "S3TestBucket2c",
-                    Prefix = "S3Bucket/Team4/"
-                }
-                
+                client.GetFakeListRequestTeam1("S3ResponseGenTestBucket1RQ")
+                              
             };
 
             expectedObjectResponses = new List<ListObjectsResponse>
             {
-                new ListObjectsResponse
-                {
-                    Name = "S3TestBucket2c",
-                    
-                    S3Objects = new List<S3Object>
-                    {
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team1/smallsizefile",
-                        },
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team1/smallsizefile2"
-                        },
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team1/smallsizefile3"
-                        }
-
-
-                    },
+                client.GetFakeListResponseTeam1()
                    
-                },
-                new ListObjectsResponse
-                {
-                    Name = "S3TestBucket2c",
-                    S3Objects = new List<S3Object>
-                    {
-                         new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team2/largesizefile",
-                        },
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team2/largesizefile2"
-                        },
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team2/largesizefile3"
-                        },
-                        new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team2/mediumsizefile"
-                        }
-
-                    },
-                    
-                    
-                },
-                new ListObjectsResponse
-                {
-                    Name = "S3TestBucket2c",
-                    S3Objects = new List<S3Object>
-                    {
-                         new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team3/smallsizefile",
-                        },
-                    }
-                },
-                new ListObjectsResponse
-                {
-                    Name = "S3TestBucket2c",
-                    S3Objects = new List<S3Object>
-                    {
-                         new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team4/largesizefile2",
-                        },
-                         new S3Object
-                        {
-                            BucketName = "S3TestBucket2c",
-                            Key = "S3Bucket/Team4/largesizefile3",
-                        },
-                    }
-                }
-
             };
 
             
@@ -276,6 +131,42 @@ namespace S3Tests
             
             //ASSERT
             ListObjResponsesAreSame(expectedObjectResponses, result, "2");
+        }
+
+
+
+
+        [Fact]
+        public void GetObjectResponseList_4ListObjectRequests_ReturnList4Responses()
+        {
+            //ARRANGE
+            client.CreateBucket4TeamsMultipleFilesEach("S3ResponseGenTestBucket4RQ");
+            sut = new ObjectResponseGenerator(client.GetClient());
+            
+            objRequestArgs = new List<ListObjectsRequest>
+            {
+                client.GetFakeListRequestTeam1("S3ResponseGenTestBucket4RQ"),
+                client.GetFakeListRequestTeam2("S3ResponseGenTestBucket4RQ"),
+                client.GetFakeListRequestTeam3("S3ResponseGenTestBucket4RQ"),
+                client.GetFakeListRequestTeam4("S3ResponseGenTestBucket4RQ")
+          
+            };
+
+            expectedObjectResponses = new List<ListObjectsResponse>
+            {
+                client.GetFakeListResponseTeam1_3Files(),
+                client.GetFakeListResponseTeam2(),
+                client.GetFakeListResponseTeam3(),
+                client.GetFakeListResponseTeam4()
+                
+            };
+
+            
+            //ACT
+            var result = sut.GetObjectResponseList(objRequestArgs).OrderBy(x => x.S3Objects[0].Key);
+            
+            //ASSERT
+            ListObjResponsesAreSame(expectedObjectResponses, result, "3");
         }
 
 

@@ -12,7 +12,6 @@ namespace S3ClassLib
     public class ObjectRequestGenerator 
     {
         
-        AmazonS3Client client;
         List<ListObjectsRequest> objRequests = new List<ListObjectsRequest>();
         string bucket;
         public ObjectRequestGenerator()
@@ -25,11 +24,7 @@ namespace S3ClassLib
             bucket = bucketName;
         }
 
-         public ObjectRequestGenerator(AmazonS3Client _client, string bucketName)
-        {
-            client = _client;
-            bucket = bucketName;
-        }
+        
 
         //Process list of requests and then make them..
         private void ProcessListIntoRequests(List<string> teamNames)

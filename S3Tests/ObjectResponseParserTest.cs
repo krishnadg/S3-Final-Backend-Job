@@ -15,8 +15,8 @@ namespace S3Tests
 
     public abstract class ObjResponseTestsBase : IDisposable
     {
-        protected AWSTestClient client;
-        protected List<ListObjectsResponse> listResponsesArg;
+        protected AWSClientTest client;
+        protected List<ListObjectsResponse> listResponsesArgs;
         protected Dictionary<string, long> expected;
         protected ObjectResponseParser sut;
 
@@ -24,25 +24,25 @@ namespace S3Tests
         {
             // Do "global" initialization here; Called before every test method.
 
-            client = new AWSTestClient();
+            client = new AWSClientTest();
             expected = new Dictionary<string, long>();
-            listResponsesArg = new List<ListObjectsResponse>();
+            listResponsesArgs = new List<ListObjectsResponse>();
         }
 
         public void Dispose()
         {
             // Do "global" teardown here; Called after every test method.
+
         }
     } 
 
 
-    namespace S3Tests
-    {
-
+    
 
     public class ObjectResponseParserTest : ObjResponseTestsBase
     {
 
+        /* Test helper to more easily verify the Dictionary data structures are identical */
         public void DataStructuresAreSame(Dictionary<string, long> expected, Dictionary<string, long> result)
         {
             var countMatches = expected.Count == result.Count;
@@ -63,6 +63,42 @@ namespace S3Tests
 
             }
         }
+
+         [Fact]
+        public void ParseListObjectresponses_0ListResponses_Return0Entries()
+        {
+             //ARRANGE
+            sut = new ObjectResponseParser();
+            
+            expected.Clear();
+            
+            //ACT
+
+            var result = sut.GetDataStructure(listResponsesArgs);
+
+            //ASSERT
+            DataStructuresAreSame(expected, result);
+        }
+
+        [Fact]
+        public void ParseListObjectresponses_1ListResponses_Return1Entry()
+        {
+             //ARRANGE
+            sut = new ObjectResponseParser();
+
+            listResponsesArgs.Add(client.GetFakeListResponseTeam1()); //Static List Response from AWSClient.cs
+           
+            var team1Data = 194;
+            expected.Add("Team1", team1Data);
+            
+            
+            //ACT
+
+            var result = sut.GetDataStructure(listResponsesArgs);
+
+            //ASSERT
+            DataStructuresAreSame(expected, result);
+        }
     
         [Fact]
         public void ParseListObjectresponses_3ListResponses_Return3Entries()
@@ -70,22 +106,24 @@ namespace S3Tests
              //ARRANGE
             sut = new ObjectResponseParser();
             
-            listResponsesArg.Add(client.GetListResponse()); //Static List Response from AWSClient.cs
-            listResponsesArg.Add(client.GetListResponse2());
-            listResponsesArg.Add(client.GetListResponse3());
+            listResponsesArgs.Add(client.GetFakeListResponseTeam1_3Files()); //Static Lists Response from AWSClientTest.cs
+            listResponsesArgs.Add(client.GetFakeListResponseTeam2());
+            listResponsesArgs.Add(client.GetFakeListResponseTeam3());
 
+            var team1Size = 900;
+            var team2Size = 1004;
+            var team3Size = 100024;
 
-            expected.Add("Team1", 1116);
-            expected.Add("Team2", 573);
-            expected.Add("Team3", 228878);
+            expected.Add("Team1", team1Size);
+            expected.Add("Team2", team2Size);
+            expected.Add("Team3", team3Size);
 
             
             //ACT
 
-            var result = sut.GetDataStructure(listResponsesArg);
+            var result = sut.GetDataStructure(listResponsesArgs);
 
             //ASSERT
-            //Assert.Equal(expected, result);
             DataStructuresAreSame(expected, result);
         }
         
@@ -98,5 +136,4 @@ namespace S3Tests
         }
         
     }
-}
 }

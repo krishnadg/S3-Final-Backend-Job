@@ -61,7 +61,6 @@ namespace S3ClassLib
                 //Exit if null, no files in bucket
                 if (listResponse.CommonPrefixes is null || listResponse.CommonPrefixes.Count is 0)
                 {
-                    Console.WriteLine("no prefixes");
                     return;
                 }
                 //Add in each unique team name
