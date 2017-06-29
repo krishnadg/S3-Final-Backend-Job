@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  s3jobfinal:
+    image: s3jobfinal
+    build: .
+    ports:
+      - 8080:8080

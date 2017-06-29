@@ -65,7 +65,6 @@ namespace S3Tests
         public void GetObjectRequestList_0TeamNames_ReturnEmptyList()
         {
             //ARRANGE
-            client.CreateEmptyBucket("S3RequestGenTestBucket0TN");
             sut = new ObjectRequestGenerator( "S3RequestGenTestBucket0TN");
             
             expectedObjectsRequests = new List<ListObjectsRequest>(); //Empty
@@ -82,7 +81,6 @@ namespace S3Tests
         public void GetObjectRequestList_1TeamName_ReturnList1Request()
         {
             //ARRANGE
-            client.CreateBucket1Team1File("S3RequestGenTestBucket1TN");
             sut = new ObjectRequestGenerator( "S3RequestGenTestBucket1TN");
             teamNamesArgs.Add("Team1");
             
@@ -103,7 +101,6 @@ namespace S3Tests
         public void GetObjectRequestList_4TeamNames_ReturnList4Requests()
         {
             //ARRANGE
-            client.CreateBucket4TeamsMultipleFilesEach("S3RequestGenTestBucket4TN");
             sut = new ObjectRequestGenerator("S3RequestGenTestBucket4TN");
             teamNamesArgs.Add("Team1");
             teamNamesArgs.Add("Team2");

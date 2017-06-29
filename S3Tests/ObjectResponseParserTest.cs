@@ -127,13 +127,6 @@ namespace S3Tests
             DataStructuresAreSame(expected, result);
         }
         
-
-        [Fact]
-        public void TestParseOnListResponseSize3()
-        {
-            
-
-        }
         
     }
 }

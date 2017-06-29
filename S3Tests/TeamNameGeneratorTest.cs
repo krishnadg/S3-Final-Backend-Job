@@ -40,6 +40,7 @@ namespace S3Tests
     {
     
         [Fact]
+        [Trait("Category", "Integration")]
         public void GetListOfTeamNames_0Teams0Files_ReturnEmpty()
         {
             //ARRANGE
@@ -53,7 +54,10 @@ namespace S3Tests
             Assert.Equal(expectedTeamNames, result);
         }
 
-         [Fact]
+         
+        [Fact]
+        [Trait("Category", "Integration")]
+
         public void GetListOfTeamNames_1Team1File_Return1Teams()
         {
             //ARRANGE
@@ -73,6 +77,8 @@ namespace S3Tests
         
 
         [Fact]
+        [Trait("Category", "Integration")]
+
         public void GetListOfTeamNames_3Teams1FileEach_Return3Teams()
         {
             //ARRANGE
@@ -92,6 +98,7 @@ namespace S3Tests
         }
 
         [Fact]
+        [Trait("Category", "Integration")]
         public void GetListOfTeamNames_2Teams3FilesEach_Return2Teams()
         {
             //ARRANGE
@@ -110,6 +117,7 @@ namespace S3Tests
         }
 
         [Fact]
+        [Trait("Category", "Integration")]
         public void GetListOfTeamNames_4TeamsVariousFilesEach_Return4Teams()
         {
             //ARRANGE

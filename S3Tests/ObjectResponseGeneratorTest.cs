@@ -86,6 +86,7 @@ namespace S3Tests
 
 
         [Fact]
+        [Trait("Category", "Integration")]
         public void GetObjectResponseList_0ListObjectRequests_ReturnEmptyList()
         {
             //ARRANGE
@@ -107,6 +108,7 @@ namespace S3Tests
 
 
         [Fact]
+        [Trait("Category", "Integration")]
         public void GetObjectResponseList_1ListObjectRequests_ReturnList1Response()
         {
             //ARRANGE
@@ -137,6 +139,7 @@ namespace S3Tests
 
 
         [Fact]
+        [Trait("Category", "Integration")]
         public void GetObjectResponseList_4ListObjectRequests_ReturnList4Responses()
         {
             //ARRANGE
