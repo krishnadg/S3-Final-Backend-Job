@@ -35,7 +35,7 @@ stage ('Build-Docker-Image') {
 		containers: [
 			containerTemplate(
 				name: 'docker-image',
-				image: 'microsoft/dotnet:1.1.2-sdk',
+				image: 'docker:latest',
 				ttyEnabled: true,
 				command: 'cat',
 				

@@ -19,10 +19,10 @@ namespace S3Tests
         
         partial class S3TeamStorageInfo
         {
-            string teamName;
-            long storageSize;
+            public string teamName;
+            public long storageSize;
 
-            DateTime lastDateModified;
+            public DateTime lastDateModified;
             public S3TeamStorageInfo()
             {
                 
@@ -32,19 +32,41 @@ namespace S3Tests
         [Fact]
         public void TestJsonFast()
         {
-
-
-            Dictionary<string, long> testDict = new Dictionary<string, long>
+            List<S3TeamStorageInfo> teamInfo = new List<S3TeamStorageInfo>
             {
-                {"Team1", 1000},
-                {"Team2", 2000},
-                {"Team3", 3000},
-                {"Team4", 4000},
-                {"Team5", 5000},
+                new S3TeamStorageInfo
+                {
+                    teamName = "Team1",
+                    storageSize = 100123,
+                    lastDateModified = new DateTime(2012, 3, 21 )
+                    
 
+
+                },
+                new S3TeamStorageInfo
+                {
+                    teamName = "Team2",
+                    storageSize = 100123,
+                    lastDateModified = new DateTime(2014, 3, 11 )
+                    
+
+
+                },
+                new S3TeamStorageInfo
+                {
+                    teamName = "Team1",
+                    storageSize = 100123,
+                    lastDateModified = new DateTime(2015, 1, 12 )
+                    
+
+
+                }
             };
 
-            var jsonString = JsonConvert.SerializeObject(testDict);
+          
+
+            var jsonString = JsonConvert.SerializeObject(teamInfo);
+
 
 
             Assert.True(true, jsonString);
