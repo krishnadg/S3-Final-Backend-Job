@@ -9,5 +9,7 @@
     <PackageReference Include="AWSSDK.S3" Version="3.3.7"/>
     <PackageReference Include="System.Diagnostics.Contracts" Version="4.3.0"/>
     <PackageReference Include="System.ObjectModel" Version="4.3.0"/>
+    <PackageReference Include="System.Json" Version="4.4.0-preview2-25405-01"/>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3"/>
   </ItemGroup>
 </Project>

@@ -1,9 +1,8 @@
 
 FROM microsoft/dotnet:1.1.2-sdk
 LABEL Name=s3job Version=0.0.1 
-ARG source=.
-COPY . /usr/share/dotnet/sdk/foo
-WORKDIR /usr/share/dotnet/sdk/fooEXPOSE 8080
+COPY . /usr/share/dotnet/sdk/s3job
+WORKDIR /usr/share/dotnet/sdk/s3job
 RUN dotnet restore
 RUN dotnet build
-ENTRYPOINT dotnet test S3Tests/S3Tests.csproj
+ENTRYPOINT dotnet run --project S3ClassLib/S3ClassLib.csproj

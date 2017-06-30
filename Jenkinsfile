@@ -28,3 +28,26 @@ stage ('Test') {
 		}
 	}
 }
+
+stage ('Build-Docker-Image') {
+	podTemplate(
+		label: 'docker-build-pod',
+		containers: [
+			containerTemplate(
+				name: 'docker-image',
+				image: 'microsoft/dotnet:1.1.2-sdk',
+				ttyEnabled: true,
+				command: 'cat',
+				
+			)
+		]
+	) {
+		node('docker-build-pod') {
+			container('docker-image') {
+
+				checkout scm
+				sh 'docker build -f Dockerfile -t s3jobfinal:latest .'
+			}
+		}
+	}
+}
