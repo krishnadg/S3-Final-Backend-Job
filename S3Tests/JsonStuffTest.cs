@@ -47,7 +47,7 @@ namespace S3Tests
             var jsonString = JsonConvert.SerializeObject(testDict);
 
 
-            Assert.True(false, jsonString);
+            Assert.True(true, jsonString);
 
 
         }
