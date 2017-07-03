@@ -29,7 +29,24 @@ stage ('Test') {
 	}
 }
 
-stage ('Build-Docker-Image') {
+stage ('Dind') {
+  podTemplate(
+    label: 'default',
+  ) {
+    node('default') {
+      container('default') {
+        git url: 'https://github.com/krishnadg/S3-Final-Backend-Job.git', branch: 'master'
+        sh '$(aws ecr get-login --no-include-email --region us-west-2)'
+        sh 'docker build -f Dockerfile -t s3job:latest .'
+        sh 'docker tag s3job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest'
+        sh 'docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest'
+      }
+    }
+  }
+}
+
+
+/*stage ('Build-Docker-Image') {
 	podTemplate(
 		label: 'docker-build-pod',
 		containers: [
@@ -51,3 +68,4 @@ stage ('Build-Docker-Image') {
 		}
 	}
 }
+*/
