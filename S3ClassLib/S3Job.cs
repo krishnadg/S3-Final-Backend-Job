@@ -17,11 +17,13 @@ namespace S3ClassLib
        
         AmazonS3Client client;
         string bucket;
+        string bucketPrefix;
 
-        public S3Job(AmazonS3Client _client, string bucketName)
+        public S3Job(AmazonS3Client _client, string bucketName, string _bucketPrefix)
         {
             client = _client;
             bucket = bucketName;
+            bucketPrefix = _bucketPrefix;
         }
 
         public string SetBucket(string newBucketName)
@@ -34,10 +36,14 @@ namespace S3ClassLib
 
         public Dictionary<string, long> DoS3Job()
         {
-            
+
+            //Gather all prefixes that are needed to find all team names
+            SearchPrefixGenerator searchPrefixGen = new SearchPrefixGenerator(client, bucket);
+            List<string> bucketPrefixList = searchPrefixGen.GetListOfPrefixes(bucketPrefix);
+            Console.WriteLine("test");
              //Gather team names in S3 Bucket
              TeamNameGenerator teamNameGen = new TeamNameGenerator(client, bucket);
-             List<string> teamNames = teamNameGen.GetListOfTeamNames();
+             Dictionary<string, List<string>> teamNames = teamNameGen.GetListOfTeamNames(bucketPrefixList);
 
              //Generate necessary requests to be made to S3Bucket
              ObjectRequestGenerator objRequestGen = new ObjectRequestGenerator(bucket);
@@ -48,7 +54,7 @@ namespace S3ClassLib
              List<ListObjectsResponse> objResponses = objResponseGen.GetObjectResponseList(objRequests);
 
              //Parse responses into readable storage container to be sent to frontend workspace
-            ObjectResponseParser objResponseParser = new ObjectResponseParser();
+            ObjectResponseParser objResponseParser = new ObjectResponseParser(bucketPrefix);
             Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
 
             //Print Data to Console

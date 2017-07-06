@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
 using System.Collections.Generic;
-
+using Newtonsoft.Json;
 namespace S3ClassLib
 {
     public class ObjectResponseParser
@@ -13,20 +13,22 @@ namespace S3ClassLib
         //Class for parsing ListObjectResponses data metrics into storage ----
         // k,v = (list team name, total storage)
         Dictionary<string, long> teamsStorage = new Dictionary<string, long>();
-        public ObjectResponseParser()
+        string bucketPrefix;
+        public ObjectResponseParser(string _bucketPrefix)
         {
-            
+            bucketPrefix = _bucketPrefix;
         }
 
         private void ParseListObjectResponses(List<ListObjectsResponse> listObjResponses)
         {
-            //Change this value based on the name of the bucket stored in, ex "TestBucket/teamname/files", lengthOfBucketname = 11
-            int lengthOfBucketname = 9;
+            //Change this value based on the name of the bucket stored in, ex "TestBucket/YY_MM_DD/teamname/files", lengthOfPrefixUpToTeamName = 20
+            int sizeOfDatePrefix = 10; 
+            int lengthOfPrefixUpToTeamName = bucketPrefix.Length + sizeOfDatePrefix ;
 
             foreach(ListObjectsResponse listResponse in listObjResponses)
             {
-                //Team name = Entire prefix (ex. "s3bucket/team1/") minus bucket name ("s3bucket/") leaving team name ("team1/"), minus 1 for '/' leaves "team1"
-                string teamName = listResponse.Prefix.Substring(lengthOfBucketname, listResponse.Prefix.Length - lengthOfBucketname - 1);
+                //Team name = Entire prefix (ex. "s3bucket/12_09_12/team1/") minus bucket name ("s3bucket/12_09_12/") leaving team name ("team1/"), minus 1 for '/' leaves "team1"
+                string teamName = listResponse.Prefix.Substring(lengthOfPrefixUpToTeamName, listResponse.Prefix.Length - lengthOfPrefixUpToTeamName - 1);
                 
                 ParseObjectResponse(listResponse, teamName);
             }
@@ -70,6 +72,22 @@ namespace S3ClassLib
         {
             ParseListObjectResponses(listObjResponses);
             return teamsStorage;
+        }
+
+        //Get Json and maybe put it in S3 Storage...
+        private string WriteStructureToJson(Dictionary<string, long> dict)
+        {
+            string json = JsonConvert.SerializeObject(dict);
+
+            PutObjectRequest putJson = new PutObjectRequest
+            {
+                BucketName = "TBD",
+                
+            };
+            
+
+            return json;
+            
         }
 
 

@@ -8,6 +8,7 @@ using Amazon.S3.Model;
 using Amazon.Runtime;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace S3Tests
 {
@@ -16,15 +17,16 @@ namespace S3Tests
     public abstract class TeamNameGenTestsBase : IDisposable
     {   
         protected AWSClientTest client;
-        protected List<string> expectedTeamNames;
+        protected Dictionary<string, List<string>> expectedTeamNamesAndPrefixes;
 
+        protected List<string> prefixesArgs;
         protected TeamNameGenerator sut;
         protected TeamNameGenTestsBase()
         {
             // Do "global" initialization here; Called before every test method.
             client = new AWSClientTest();
-            expectedTeamNames = new List<string>();
-
+            expectedTeamNamesAndPrefixes = new Dictionary<string, List<string>>();
+            prefixesArgs = new List<string>();
         }
 
         public void Dispose()
@@ -38,6 +40,35 @@ namespace S3Tests
 
     public class TeamNameGeneratorTest : TeamNameGenTestsBase
     {
+
+
+         /*Test Helper method */
+        public void AreSameDictionaries(Dictionary<string, List<string>> expected, Dictionary<string, List<string>> result)
+        {  
+            var countMatches = expected.Count == result.Count;
+            Assert.True(countMatches, String.Format("expected count {0}, got count {1}", expected.Count, result.Count ));
+
+            
+            foreach (KeyValuePair<string, List<string>> pair in expected)
+            {
+                string teamName = pair.Key;
+                bool hasTeamName = result.ContainsKey(teamName);
+                Assert.True(hasTeamName, String.Format("expected team name {0}, got didn't have", teamName));
+
+                List<string> expectedPrefixes = pair.Value;
+                List<string> resultPrefixes = result[teamName];
+
+                AreSameLists(expectedPrefixes, resultPrefixes);
+
+            }
+
+        }
+
+        public void AreSameLists(List<string> expected, List<string> result)
+        {
+            Assert.Equal(expected, result);
+        }
+
     
         [Fact]
         [Trait("Category", "Integration")]
@@ -48,10 +79,10 @@ namespace S3Tests
             sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket0N");
 
             //ACT
-            var result = sut.GetListOfTeamNames();
+            var result = sut.GetListOfTeamNames(prefixesArgs);
 
             //ASSERT
-            Assert.Equal(expectedTeamNames, result);
+            AreSameDictionaries(expectedTeamNamesAndPrefixes, result);
         }
 
          
@@ -64,15 +95,17 @@ namespace S3Tests
             client.CreateBucket1Team1File("S3TeamNameGenTestBucket1T1F");
             sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket1T1F");
 
-            expectedTeamNames.Add("Team1");
+            prefixesArgs.Add("S3Bucket/12_04_13/"); 
+
+            expectedTeamNamesAndPrefixes.Add("Team1", new List<string> {"S3Bucket/12_04_13/"});
 
 
             //ACT
-            var result = sut.GetListOfTeamNames();
+            var result = sut.GetListOfTeamNames(prefixesArgs);
             
 
            //ASSERT
-            Assert.Equal(expectedTeamNames, result);
+           AreSameDictionaries(expectedTeamNamesAndPrefixes, result);
         }
         
 
@@ -85,17 +118,20 @@ namespace S3Tests
             client.CreateBucket3Teams1FileEach("S3TeamNameGenTestBucket3T1F");
             sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket3T1F");
 
-            expectedTeamNames.Add("Team1");
-            expectedTeamNames.Add("Team2");
-            expectedTeamNames.Add("Team3");
+            prefixesArgs.Add("S3Bucket/12_04_13/"); 
+
+
+            expectedTeamNamesAndPrefixes.Add("Team1", new List<string> {"S3Bucket/12_04_13/"});
+            expectedTeamNamesAndPrefixes.Add("Team2", new List<string> {"S3Bucket/12_04_13/"});
+            expectedTeamNamesAndPrefixes.Add("Team3", new List<string> {"S3Bucket/12_04_13/"});
 
             //ACT
-            var result = sut.GetListOfTeamNames();
+            var result = sut.GetListOfTeamNames(prefixesArgs);
             
 
            //ASSERT
-            Assert.Equal(expectedTeamNames, result);
-        }
+           AreSameDictionaries(expectedTeamNamesAndPrefixes, result);
+         }
 
         [Fact]
         [Trait("Category", "Integration")]
@@ -105,15 +141,17 @@ namespace S3Tests
             client.CreateBucket2Teams3FilesEach("S3TeamNameGenTestBucket2T3F");
             sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket2T3F");
 
-            expectedTeamNames.Add("Team1");
-            expectedTeamNames.Add("Team2");
+            prefixesArgs.Add("S3Bucket/12_04_13/");
+
+            expectedTeamNamesAndPrefixes.Add("Team1", new List<string> {"S3Bucket/12_04_13/"});
+            expectedTeamNamesAndPrefixes.Add("Team2", new List<string> {"S3Bucket/12_04_13/"});
 
             //ACT
-            var result = base.sut.GetListOfTeamNames();
+            var result = sut.GetListOfTeamNames(prefixesArgs);
            
 
            //ASSERT
-            Assert.Equal(expectedTeamNames, result);
+            AreSameDictionaries(expectedTeamNamesAndPrefixes, result);
         }
 
         [Fact]
@@ -124,16 +162,19 @@ namespace S3Tests
             client.CreateBucket4TeamsMultipleFilesEach("S3TeamNameGenTestBucket4TVF");
             sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket4TVF");
 
-            expectedTeamNames.Add("Team1");
-            expectedTeamNames.Add("Team2");
-            expectedTeamNames.Add("Team3");
-            expectedTeamNames.Add("Team4");
+            prefixesArgs.Add("S3Bucket/12_04_13/"); 
+
+            expectedTeamNamesAndPrefixes.Add("Team1", new List<string> {"S3Bucket/12_04_13/"});
+            expectedTeamNamesAndPrefixes.Add("Team2", new List<string> {"S3Bucket/12_04_13/"});
+            expectedTeamNamesAndPrefixes.Add("Team3", new List<string> {"S3Bucket/12_04_13/"});
+            expectedTeamNamesAndPrefixes.Add("Team4", new List<string> {"S3Bucket/12_04_13/"});
+
 
             //ACT
-            var result = base.sut.GetListOfTeamNames();
+            var result = sut.GetListOfTeamNames(prefixesArgs);
 
             //ASSERT
-            Assert.Equal(expectedTeamNames, result);
+            AreSameDictionaries(expectedTeamNamesAndPrefixes, result);
         }
     }
 

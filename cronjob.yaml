@@ -1,0 +1,16 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+    name: s3-job
+spec:
+  schedule: "* */1 * * *"
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec: 
+          containers:
+          - name: s3-job
+            image: 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+            args: ["datalens-logs" , "prod"]

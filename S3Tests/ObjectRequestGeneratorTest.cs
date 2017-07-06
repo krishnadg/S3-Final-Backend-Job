@@ -17,7 +17,7 @@ namespace S3Tests
     public abstract class ObjRequestTestsBase : IDisposable
     {   
         protected AWSClientTest client;
-        protected List<string> teamNamesArgs; //To be used for the arguments of sut's "do its job" method
+        protected Dictionary<string, List<string>> teamNamesArgs; //To be used for the arguments of sut's "do its job" method
         protected List<ListObjectsRequest> expectedObjectsRequests;
 
         protected ObjectRequestGenerator sut;
@@ -26,7 +26,7 @@ namespace S3Tests
         {
             // Do "global" initialization here; Called before every test method.
             client = new AWSClientTest();
-            teamNamesArgs = new List<string>();  
+            teamNamesArgs = new Dictionary<string, List<string>> ();  
 
         }
 
@@ -38,7 +38,7 @@ namespace S3Tests
 
 
 
-    public class ObjectResponseRequestTest : ObjRequestTestsBase
+    public class ObjectRequestGeneratorTest : ObjRequestTestsBase
     {
         /*Test Helper method */
         public void IsSameObjectRequests(List<ListObjectsRequest> expected, IOrderedEnumerable<ListObjectsRequest> result, String testCase)
@@ -65,7 +65,7 @@ namespace S3Tests
         public void GetObjectRequestList_0TeamNames_ReturnEmptyList()
         {
             //ARRANGE
-            sut = new ObjectRequestGenerator( "S3RequestGenTestBucket0TN");
+            sut = new ObjectRequestGenerator("S3RequestGenTestBucket0TN");
             
             expectedObjectsRequests = new List<ListObjectsRequest>(); //Empty
             
@@ -82,7 +82,7 @@ namespace S3Tests
         {
             //ARRANGE
             sut = new ObjectRequestGenerator( "S3RequestGenTestBucket1TN");
-            teamNamesArgs.Add("Team1");
+            teamNamesArgs.Add("Team1", new List<string> {"S3Bucket/12_04_13/"});
             
             expectedObjectsRequests = new List<ListObjectsRequest> {
                 client.GetFakeListRequestTeam1("S3RequestGenTestBucket1TN")
@@ -102,10 +102,10 @@ namespace S3Tests
         {
             //ARRANGE
             sut = new ObjectRequestGenerator("S3RequestGenTestBucket4TN");
-            teamNamesArgs.Add("Team1");
-            teamNamesArgs.Add("Team2");
-            teamNamesArgs.Add("Team3");
-            teamNamesArgs.Add("Team4");
+            teamNamesArgs.Add("Team1", new List<string> {"S3Bucket/12_04_13/"});
+            teamNamesArgs.Add("Team2", new List<string> {"S3Bucket/12_04_13/"});
+            teamNamesArgs.Add("Team3", new List<string> {"S3Bucket/12_04_13/"});
+            teamNamesArgs.Add("Team4", new List<string> {"S3Bucket/12_04_13/"});
 
 
             expectedObjectsRequests = new List<ListObjectsRequest> {

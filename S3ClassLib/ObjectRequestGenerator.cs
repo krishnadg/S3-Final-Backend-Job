@@ -27,29 +27,42 @@ namespace S3ClassLib
         
 
         //Process list of requests and then make them..
-        private void ProcessListIntoRequests(List<string> teamNames)
+        private void ProcessListIntoRequests(Dictionary<string, List<string>> teamNamesPrefixes) //(Dictionary<string, List<string>>)
+        {
+            
+            //Go through each pair of team name, list of prefixes, generate all corresponding requests 
+            foreach (KeyValuePair<string, List<string>> teamNameWithListPrefixes in teamNamesPrefixes)
+            {
+               GetAllRequestsForSingleTeam(teamNameWithListPrefixes);
+
+            }
+
+        }
+
+        private void GetAllRequestsForSingleTeam(KeyValuePair<string, List<string>> teamNameWithListPrefixes)
         {
             ListObjectsRequest listRequest;
-            
-            
-            foreach (string team in teamNames)
+
+            string teamName = teamNameWithListPrefixes.Key;
+
+            foreach(string teamPrefix in teamNameWithListPrefixes.Value)
             {
                 listRequest = new ListObjectsRequest
                 {
                     BucketName = bucket,
-                    Prefix = "S3Bucket/" + team + "/",
+                    Prefix = teamPrefix + teamName + "/",
                 };
 
                 objRequests.Add(listRequest);
-            }
 
+            }
 
 
         }
 
-        public List<ListObjectsRequest> GetObjectRequestList(List<string> teamNames)
+        public List<ListObjectsRequest> GetObjectRequestList(Dictionary<string, List<string>> teamNamesPrefixes)
         {
-            ProcessListIntoRequests(teamNames);
+            ProcessListIntoRequests(teamNamesPrefixes);
 
             return objRequests;
         }

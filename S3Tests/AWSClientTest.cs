@@ -67,7 +67,7 @@ namespace S3Tests
 
          private void InitializeFilesInBucket1Team(string bucketName)
         {
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile");
             
         }
 
@@ -83,9 +83,9 @@ namespace S3Tests
 
         private void InitializeFilesInBucket1(string bucketName)
         {
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile", "Content = stuff im saying blah blah");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/mediumsizefile");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team3/largesizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile", "Content = stuff im saying blah blah");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/mediumsizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team3/largesizefile");
 
         
 
@@ -100,13 +100,13 @@ namespace S3Tests
 
         private void InitializeFilesInBucket2(string bucketName)
         {
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile2");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile3");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile2");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile3");
 
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile2");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile3");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/largesizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/largesizefile2");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/largesizefile3");
 
         
 
@@ -121,19 +121,19 @@ namespace S3Tests
 
         private void InitializeFilesInBucket3(string bucketName)
         {
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile2");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team1/smallsizefile3");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile2");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile3");
 
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/mediumsizefile");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile2");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team2/largesizefile3");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/mediumsizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/largesizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/largesizefile2");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/largesizefile3");
 
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team3/smallsizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team3/smallsizefile");
 
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team4/largesizefile2");
-            PutSingleFileInBucket(bucketName, "S3Bucket/Team4/largesizefile3");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team4/largesizefile2");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team4/largesizefile3");
             
 
         }
@@ -181,7 +181,7 @@ namespace S3Tests
         {
             return new ListObjectsRequest{
                 BucketName = bucketName,
-                Prefix = "S3Bucket/Team1/",
+                Prefix = "S3Bucket/12_04_13/Team1/",
                 
                 };
         }
@@ -190,7 +190,7 @@ namespace S3Tests
         {
             return new ListObjectsRequest{
                 BucketName = bucketName,
-                Prefix = "S3Bucket/Team2/",
+                Prefix = "S3Bucket/12_04_13/Team2/",
                 };
             
         }
@@ -199,7 +199,7 @@ namespace S3Tests
         {
             return new ListObjectsRequest{
                 BucketName = bucketName,
-                Prefix = "S3Bucket/Team3/",
+                Prefix = "S3Bucket/12_04_13/Team3/",
                 };
         }
  
@@ -207,7 +207,7 @@ namespace S3Tests
         {
             return new ListObjectsRequest{
                 BucketName = bucketName,
-                Prefix = "S3Bucket/Team4/",
+                Prefix = "S3Bucket/12_04_13/Team4/",
                 }  ;
 
         }
@@ -228,7 +228,7 @@ namespace S3Tests
 
             var list = AddFakeObjectsToListResponse(new List<S3Object>());
             listResponse.S3Objects = list;
-            listResponse.Prefix = "S3Bucket/Team1/";
+            listResponse.Prefix = "S3Bucket/12_04_13/Team1/";
 
             return listResponse;
         }
@@ -240,7 +240,7 @@ namespace S3Tests
 
             var list = AddFakeObjectsToListResponse1(new List<S3Object>());
             listResponse.S3Objects = list;
-            listResponse.Prefix = "S3Bucket/Team1/";
+            listResponse.Prefix = "S3Bucket/12_04_13/Team1/";
 
             return listResponse;
         }
@@ -253,7 +253,7 @@ namespace S3Tests
 
             var list = AddFakeObjectsToListResponse2(new List<S3Object>());
             listResponse.S3Objects = list;
-            listResponse.Prefix = "S3Bucket/Team2/";
+            listResponse.Prefix = "S3Bucket/12_04_13/Team2/";
 
             return listResponse;
         }
@@ -265,7 +265,7 @@ namespace S3Tests
             
             var list = AddFakeObjectsToListResponse3(new List<S3Object>());
             listResponse.S3Objects = list;
-            listResponse.Prefix = "S3Bucket/Team3/";
+            listResponse.Prefix = "S3Bucket/12_04_13/Team3/";
             return listResponse;
         }
 
@@ -276,7 +276,7 @@ namespace S3Tests
             
             var list = AddFakeObjectsToListResponse4(new List<S3Object>());
             listResponse.S3Objects = list;
-            listResponse.Prefix = "S3Bucket/Team4/";
+            listResponse.Prefix = "S3Bucket/12_04_13/Team4/";
             return listResponse;
         }
 
@@ -284,7 +284,7 @@ namespace S3Tests
         public List<S3Object> AddFakeObjectsToListResponse(List<S3Object> objects)
         {
             var s3Object1 = new S3Object();
-            s3Object1.Key = "S3Bucket/Team1/smallsizefile";
+            s3Object1.Key = "S3Bucket/12_04_13/Team1/smallsizefile";
             s3Object1.Size = 194;
             
             objects.Add(s3Object1);
@@ -297,13 +297,13 @@ namespace S3Tests
         public List<S3Object> AddFakeObjectsToListResponse1(List<S3Object> objects)
         {
             var s3Object1 = new S3Object();
-            s3Object1.Key = "S3Bucket/Team1/smallsizefile";
+            s3Object1.Key = "S3Bucket/12_04_13/Team1/smallsizefile";
             s3Object1.Size = 200;
             var s3Object2 = new S3Object();
-            s3Object2.Key = "S3Bucket/Team1/smallsizefile2";
+            s3Object2.Key = "S3Bucket/12_04_13/Team1/smallsizefile2";
             s3Object2.Size = 300;
             var s3Object3 = new S3Object();
-            s3Object3.Key = "S3Bucket/Team1/smallsizefile3";
+            s3Object3.Key = "S3Bucket/12_04_13/Team1/smallsizefile3";
             s3Object3.Size = 400;
             
             objects.Add(s3Object1);
@@ -318,16 +318,16 @@ namespace S3Tests
         public List<S3Object> AddFakeObjectsToListResponse2(List<S3Object> objects)
         {
             var s3Object1 = new S3Object();
-            s3Object1.Key = "S3Bucket/Team2/mediumsizefile";
+            s3Object1.Key = "S3Bucket/12_04_13/Team2/mediumsizefile";
             s3Object1.Size = 52;
             var s3Object2 = new S3Object();
-            s3Object2.Key = "S3Bucket/Team2/largesizefile";
+            s3Object2.Key = "S3Bucket/12_04_13/Team2/largesizefile";
             s3Object2.Size = 90;
             var s3Object3 = new S3Object();
-            s3Object3.Key = "S3Bucket/Team2/largesizefile2";
+            s3Object3.Key = "S3Bucket/12_04_13/Team2/largesizefile2";
             s3Object3.Size = 431;
             var s3Object4 = new S3Object();
-            s3Object4.Key = "S3Bucket/Team2/largesizefile3";
+            s3Object4.Key = "S3Bucket/12_04_13/Team2/largesizefile3";
             s3Object4.Size = 431;
 
 
@@ -344,7 +344,7 @@ namespace S3Tests
           public List<S3Object> AddFakeObjectsToListResponse3(List<S3Object> objects)
         {
             var s3Object1 = new S3Object();
-            s3Object1.Key = "S3Bucket/Team3/smallsizefile";
+            s3Object1.Key = "S3Bucket/12_04_13/Team3/smallsizefile";
             s3Object1.Size = 100024;
            
 
@@ -360,10 +360,10 @@ namespace S3Tests
           public List<S3Object> AddFakeObjectsToListResponse4(List<S3Object> objects)
         {
             var s3Object1 = new S3Object();
-            s3Object1.Key = "S3Bucket/Team4/largesizefile2";
+            s3Object1.Key = "S3Bucket/12_04_13/Team4/largesizefile2";
             s3Object1.Size = 100024;
             var s3Object2 = new S3Object();
-            s3Object2.Key = "S3Bucket/Team4/largesizefile3";
+            s3Object2.Key = "S3Bucket/12_04_13/Team4/largesizefile3";
             s3Object2.Size = 100024;
 
             objects.Add(s3Object1);
