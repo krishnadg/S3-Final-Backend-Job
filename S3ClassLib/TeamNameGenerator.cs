@@ -53,13 +53,11 @@ namespace S3ClassLib
                 ProcessListRequestIntoTeams(listRequest);
             }
 
-            //Create request to return ALL files with date still attached
            
         }
 
 
 
-        //Adds on the 
         private void ProcessListRequestIntoTeams(ListObjectsRequest listRequest)
         {
             ListObjectsResponse listResponse;
@@ -112,7 +110,7 @@ namespace S3ClassLib
         {
             foreach (KeyValuePair<string, List<string>> teamNamePair in teamNamesAndPrefixes)
             {
-                Console.WriteLine("Team: " + teamNamePair.Key);
+                Console.WriteLine("Team: " + teamNamePair.Key + " Prefixes..." + teamNamePair.Value.Count);
             }
         }
 
