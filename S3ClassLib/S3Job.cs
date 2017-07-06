@@ -41,19 +41,20 @@ namespace S3ClassLib
             SearchPrefixGenerator searchPrefixGen = new SearchPrefixGenerator(client, bucket);
             List<string> bucketPrefixList = searchPrefixGen.GetListOfPrefixes(bucketPrefix);
 
-             //Gather team names in S3 Bucket
-             TeamNameGenerator teamNameGen = new TeamNameGenerator(client, bucket);
-             Dictionary<string, List<string>> teamNames = teamNameGen.GetListOfTeamNames(bucketPrefixList);
+            //Gather team names in S3 Bucket
+            TeamNameGenerator teamNameGen = new TeamNameGenerator(client, bucket);
+            Dictionary<string, List<string>> teamNames = teamNameGen.GetListOfTeamNames(bucketPrefixList);
 
-             //Generate necessary requests to be made to S3Bucket
-             ObjectRequestGenerator objRequestGen = new ObjectRequestGenerator(bucket);
-             List<ListObjectsRequest> objRequests = objRequestGen.GetObjectRequestList(teamNames);
+            /*
+            //Generate necessary requests to be made to S3Bucket
+            ObjectRequestGenerator objRequestGen = new ObjectRequestGenerator(bucket);
+            List<ListObjectsRequest> objRequests = objRequestGen.GetObjectRequestList(teamNames);
 
-             //Make said requests and store the corresponding list responses
-             ObjectResponseGenerator objResponseGen = new ObjectResponseGenerator(client);
-             List<ListObjectsResponse> objResponses = objResponseGen.GetObjectResponseList(objRequests);
+            //Make said requests and store the corresponding list responses
+            ObjectResponseGenerator objResponseGen = new ObjectResponseGenerator(client);
+            List<ListObjectsResponse> objResponses = objResponseGen.GetObjectResponseList(objRequests);
 
-             //Parse responses into readable storage container to be sent to frontend workspace
+            //Parse responses into readable storage container to be sent to frontend workspace
             ObjectResponseParser objResponseParser = new ObjectResponseParser(bucketPrefix);
             Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
 
@@ -61,6 +62,9 @@ namespace S3ClassLib
             objResponseParser.PrintData();
             
             return teamStorageData;
+            */
+
+            return new Dictionary<string, long>();
 
         }
 

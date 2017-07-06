@@ -105,13 +105,24 @@ namespace S3ClassLib
             // Set the marker property
              listRequest.Marker = listResponse.NextMarker;
             } while (listResponse.IsTruncated);
+        
+        }
+
+        private void PrintTeamNames()
+        {
+            foreach (KeyValuePair<string, List<string>> teamNamePair in teamNamesAndPrefixes)
+            {
+                Console.WriteLine("Team: " + teamNamePair.Key);
+            }
         }
 
         public Dictionary<string, List<string>> GetListOfTeamNames(List<string> bucketPrefixesList)
         {
             GatherTeamNames(bucketPrefixesList);
+            PrintTeamNames();
             return teamNamesAndPrefixes;
         }
+
 
     }
 
