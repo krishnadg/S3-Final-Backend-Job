@@ -64,6 +64,7 @@ namespace S3Tests
 
              // Uncomment to test when... actual client instantiated and bucket declared
             [Fact]
+            [Trait("Category", "Integration")]
             public void S3Jobtest_FakeClientFakeBucket_Return3TeamsData()
             {
 

@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+    name: s3-job
+spec:
+    replicas: 1
+    template:
+      spec: 
+        containers:
+        - name: s3-job
+          image: 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+          command: ["sleep"]
+          args: ["300"]
