@@ -88,13 +88,15 @@ namespace S3ClassLib
                     //If not, get the list and add this new common prefix (for this team name) to it
                     else
                     {
-                        //Get list, add new common prefix if it't not already in there
+                        //Get the list and remove the pair
                         var currentTeamNamePrefixList = teamNamesAndPrefixes[formattedTeamName];
+
+                        // Ddd new common prefix if it't not already in there (the date could be the same prefix for multiple files)
                         if (!currentTeamNamePrefixList.Contains(listResponse.Prefix))
                             currentTeamNamePrefixList.Add(listResponse.Prefix);
 
-                        //Add it back in to our Dict
-                        teamNamesAndPrefixes.Add(formattedTeamName, currentTeamNamePrefixList);
+                        //Add the pair back in to our Dict with the updated list
+                        teamNamesAndPrefixes[formattedTeamName] = currentTeamNamePrefixList;
                         
                     }
 

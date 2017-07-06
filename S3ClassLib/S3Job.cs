@@ -40,7 +40,7 @@ namespace S3ClassLib
             //Gather all prefixes that are needed to find all team names
             SearchPrefixGenerator searchPrefixGen = new SearchPrefixGenerator(client, bucket);
             List<string> bucketPrefixList = searchPrefixGen.GetListOfPrefixes(bucketPrefix);
-            Console.WriteLine("test");
+
              //Gather team names in S3 Bucket
              TeamNameGenerator teamNameGen = new TeamNameGenerator(client, bucket);
              Dictionary<string, List<string>> teamNames = teamNameGen.GetListOfTeamNames(bucketPrefixList);

@@ -176,6 +176,29 @@ namespace S3Tests
             //ASSERT
             AreSameDictionaries(expectedTeamNamesAndPrefixes, result);
         }
+
+        /*Tests against adding duplicate keys */
+        [Fact]
+        [Trait("Category", "Integration")]
+        public void GetListOfTeamNames_1Team2Files_Return1Team2Prefixes() 
+        {
+            //ARRANGE
+            client.CreateBucket1Team2FilesDifferentPrefixes("S3TeamNameGenTestBucket1T2F2P");
+            sut = new TeamNameGenerator(client.GetClient(), "S3TeamNameGenTestBucket1T2F2P");
+
+            prefixesArgs.Add("S3Bucket/12_04_13/"); 
+            prefixesArgs.Add("S3Bucket/12_04_20/"); 
+
+
+            expectedTeamNamesAndPrefixes.Add("Team1", new List<string> {"S3Bucket/12_04_13/", "S3Bucket/12_04_20/"});
+
+
+            //ACT
+            var result = sut.GetListOfTeamNames(prefixesArgs);
+
+            //ASSERT
+            AreSameDictionaries(expectedTeamNamesAndPrefixes, result);
+        }
     }
 
 

@@ -13,6 +13,7 @@ namespace S3ClassLib
         //Class for parsing ListObjectResponses data metrics into storage ----
         // k,v = (list team name, total storage)
         Dictionary<string, long> teamsStorage = new Dictionary<string, long>();
+        long totalBucketStorage;
         string bucketPrefix;
         public ObjectResponseParser(string _bucketPrefix)
         {
@@ -52,6 +53,7 @@ namespace S3ClassLib
 
                 
                 long objSize = obj.Size;
+                totalBucketStorage += objSize;
                 //Add to previously calculated size (value) for specified team (key)
                 if (teamsStorage.ContainsKey(teamName))
                 {
@@ -94,6 +96,8 @@ namespace S3ClassLib
         //For console printing/test purposes only, not meant for deployment
         public void PrintData()
         {
+            Console.WriteLine("Total S3 Bucket Storage\n" + totalBucketStorage);
+
             foreach (KeyValuePair<string, long> teamInfo in teamsStorage)
             {
                 Console.WriteLine("Key = {0}, Value = {1}", teamInfo.Key, teamInfo.Value);

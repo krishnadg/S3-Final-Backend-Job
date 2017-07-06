@@ -65,6 +65,13 @@ namespace S3Tests
             InitializeFilesInBucket1Team(bucketName);
         }
 
+        public void CreateBucket1Team2FilesDifferentPrefixes(string bucketName)
+        {
+            client.PutBucketAsync(bucketName);
+            InitializeFilesInBucket1Team2Prefixes(bucketName);
+        }
+
+
          private void InitializeFilesInBucket1Team(string bucketName)
         {
             PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile");
@@ -83,11 +90,18 @@ namespace S3Tests
 
         private void InitializeFilesInBucket1(string bucketName)
         {
-            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile", "Content = stuff im saying blah blah");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile", "Content = stuff im saying blah blah"); //this file will have an obj size value
             PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team2/mediumsizefile");
             PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team3/largesizefile");
 
         
+
+        }
+
+         private void InitializeFilesInBucket1Team2Prefixes(string bucketName)
+        {
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_13/Team1/smallsizefile");
+            PutSingleFileInBucket(bucketName, "S3Bucket/12_04_20/Team1/mediumsizefile");
 
         }
 
