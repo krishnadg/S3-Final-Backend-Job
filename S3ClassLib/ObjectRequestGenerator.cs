@@ -31,12 +31,17 @@ namespace S3ClassLib
         {
             
             //Go through each pair of team name, list of prefixes, generate all corresponding requests 
+            /* 
             foreach (KeyValuePair<string, List<string>> teamNameWithListPrefixes in teamNamesPrefixes)
             {
                GetAllRequestsForSingleTeam(teamNameWithListPrefixes);
 
             }
-
+            */
+            
+            KeyValuePair<string, List<string>> teamNameWithListPrefixes = new KeyValuePair<string, List<string>>("datavision-sid", teamNamesPrefixes["datavision-sid"]);
+            GetAllRequestsForSingleTeam(teamNameWithListPrefixes);
+            
         }
 
         private void GetAllRequestsForSingleTeam(KeyValuePair<string, List<string>> teamNameWithListPrefixes)
@@ -45,6 +50,8 @@ namespace S3ClassLib
 
             string teamName = teamNameWithListPrefixes.Key;
 
+
+            
             foreach(string teamPrefix in teamNameWithListPrefixes.Value)
             {
                 listRequest = new ListObjectsRequest
@@ -56,6 +63,7 @@ namespace S3ClassLib
                 objRequests.Add(listRequest);
 
             }
+            
 
 
         }

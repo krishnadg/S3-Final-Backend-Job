@@ -56,8 +56,8 @@ namespace S3ClassLib
             Console.WriteLine("Making Requests");
 
             List<ListObjectsResponse> objResponses = objResponseGen.GetObjectResponseList(objRequests);
-            Console.WriteLine("Responses Obtained");
-            /*
+            Console.WriteLine(objResponses.Count + "Responses Obtained");
+            
             //Parse responses into readable storage container to be sent to frontend workspace
             ObjectResponseParser objResponseParser = new ObjectResponseParser(bucketPrefix);
             Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
@@ -66,9 +66,9 @@ namespace S3ClassLib
             objResponseParser.PrintData();
             
             return teamStorageData;
-            */
+            
 
-            return new Dictionary<string, long>();
+            //return new Dictionary<string, long>();
 
         }
 
