@@ -1,13 +1,18 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-    name: s3-job
+  name: s3-job
 spec:
-    replicas: 1
-    template:
-      spec: 
-        containers:
-        - name: s3-job
-          image: 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-          command: ["sleep"]
-          args: ["300"]
+  replicas: 1
+  template:
+    metadata:
+      labels: 
+        app: s3-job
+      annotations:
+        kube2iam.beta.nordstrom.net/role: arn:aws:iam::543369334115:role/datalens/k8s/platform
+    spec: 
+      containers:
+      - name: s3-job
+        image: 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+        command: ["sleep"]
+        args: ["300"]
