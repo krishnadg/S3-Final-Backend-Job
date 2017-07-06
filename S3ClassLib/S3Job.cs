@@ -49,15 +49,15 @@ namespace S3ClassLib
             ObjectRequestGenerator objRequestGen = new ObjectRequestGenerator(bucket);
             List<ListObjectsRequest> objRequests = objRequestGen.GetObjectRequestList(teamNames);
             Console.WriteLine("Requests Generated...");
+
             
-            /*
             //Make said requests and store the corresponding list responses
             ObjectResponseGenerator objResponseGen = new ObjectResponseGenerator(client);
             Console.WriteLine("Making Requests");
 
             List<ListObjectsResponse> objResponses = objResponseGen.GetObjectResponseList(objRequests);
             Console.WriteLine("Responses Obtained");
-
+            /*
             //Parse responses into readable storage container to be sent to frontend workspace
             ObjectResponseParser objResponseParser = new ObjectResponseParser(bucketPrefix);
             Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
