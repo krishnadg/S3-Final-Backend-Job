@@ -100,8 +100,8 @@ namespace S3ClassLib
 
                 }
  
-            // Set the marker property
-             listRequest.Marker = listResponse.NextMarker;
+                // Set the marker property
+                listRequest.Marker = listResponse.NextMarker;
             } while (listResponse.IsTruncated);
         
         }

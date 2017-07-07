@@ -67,9 +67,9 @@ namespace S3Tests
 
             var jsonString = JsonConvert.SerializeObject(teamInfo);
 
+            var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
 
-
-            Assert.True(true, jsonString);
+            Assert.True(true, currentDateTime);
 
 
         }

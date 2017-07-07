@@ -70,25 +70,34 @@ namespace S3ClassLib
 
 
         //Parse the list of object responses, return the data structure
-        public Dictionary<string, long> GetDataStructure(List<ListObjectsResponse> listObjResponses)
+        public Dictionary<string, long> GetDataStructure(AmazonS3Client client,  List<ListObjectsResponse> listObjResponses)
         {
             ParseListObjectResponses(listObjResponses);
+            AddJsonFileToS3(client);
             return teamsStorage;
         }
 
         //Get Json and maybe put it in S3 Storage...
-        private string WriteStructureToJson(Dictionary<string, long> dict)
+        private void AddJsonFileToS3(AmazonS3Client client)
         {
-            string json = JsonConvert.SerializeObject(dict);
 
-            PutObjectRequest putJson = new PutObjectRequest
+            S3Leaderboard s3board = new S3Leaderboard(teamsStorage, totalBucketStorage, DateTime.Now);
+            string jsonString = s3board.GetJson();
+
+            var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
+            var jsonFileKey = bucketPrefix + "-leaderboard-data/" +currentDateTime.ToString() + "/";
+
+                        
+
+            PutObjectRequest putJsonRequest = new PutObjectRequest
             {
-                BucketName = "TBD",
+                BucketName = "datalens-leaderboard",
+                Key = jsonFileKey,
+                ContentBody = jsonString,
                 
             };
             
-
-            return json;
+            PutObjectResponse putJsonResponse = client.PutObjectAsync(putJsonRequest).GetAwaiter().GetResult();
             
         }
 

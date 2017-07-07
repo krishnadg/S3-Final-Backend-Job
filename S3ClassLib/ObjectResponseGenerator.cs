@@ -33,7 +33,6 @@ namespace S3ClassLib
             int count = 0;
             foreach (ListObjectsRequest listRequest in listObjRequests)
             {
-                Console.WriteLine("List Request "+ count + " Processed!");
                 do
                 {
                     // Get listResponse for up to 1000 files after marker
