@@ -1,8 +1,4 @@
-properties([
-	parameters([
-		
-	])
-])
+
 
 
 stage ('Test') {
