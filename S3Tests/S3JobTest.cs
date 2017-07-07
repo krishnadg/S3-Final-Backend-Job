@@ -62,8 +62,8 @@ namespace S3Tests
 
         }
 
-             // Uncomment to test when... actual client instantiated and bucket declared
-            [Fact]
+             // Uncomment to test when... actual client instantiated and bucket declared, json file can be added to a bucket somewhere
+            //[Fact]
             [Trait("Category", "Integration")]
             public void S3Jobtest_FakeClientFakeBucket_Return3TeamsData()
             {

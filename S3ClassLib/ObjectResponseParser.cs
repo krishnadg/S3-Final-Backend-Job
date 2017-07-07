@@ -70,15 +70,14 @@ namespace S3ClassLib
 
 
         //Parse the list of object responses, return the data structure
-        public Dictionary<string, long> GetDataStructure(AmazonS3Client client,  List<ListObjectsResponse> listObjResponses)
+        public Dictionary<string, long> GetDataStructure(List<ListObjectsResponse> listObjResponses)
         {
             ParseListObjectResponses(listObjResponses);
-            AddJsonFileToS3(client);
             return teamsStorage;
         }
 
         //Get Json and maybe put it in S3 Storage...
-        private void AddJsonFileToS3(AmazonS3Client client)
+        public void AddJsonFileToS3(AmazonS3Client client)
         {
 
             S3Leaderboard s3board = new S3Leaderboard(teamsStorage, totalBucketStorage, DateTime.Now);

@@ -60,7 +60,8 @@ namespace S3ClassLib
             
             //Parse responses into readable storage container to be sent to frontend workspace
             ObjectResponseParser objResponseParser = new ObjectResponseParser(bucketPrefix);
-            Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(client, objResponses);
+            Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
+            objResponseParser.AddJsonFileToS3(client);
             Console.WriteLine("Responses Parsed");
             //Print Data to Console
             objResponseParser.PrintData();
@@ -68,7 +69,6 @@ namespace S3ClassLib
             return teamStorageData;
             
 
-            //return new Dictionary<string, long>();
 
         }
 
