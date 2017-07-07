@@ -1,6 +1,3 @@
-
-
-
 stage ('Test') {
 	podTemplate(
 		label: 'dotnet-core-pod',
