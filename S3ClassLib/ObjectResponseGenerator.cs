@@ -30,9 +30,10 @@ namespace S3ClassLib
         {
             ListObjectsResponse listResponse;
 
+            int count = 0;
             foreach (ListObjectsRequest listRequest in listObjRequests)
             {
-
+                Console.WriteLine("List Request "+ count + " Processed!");
                 do
                 {
                     // Get listResponse for up to 1000 files after marker
@@ -46,7 +47,7 @@ namespace S3ClassLib
                 listRequest.Marker = listResponse.NextMarker;
                 } while (listResponse.IsTruncated);
 
-
+                count++;
                 
                 
             }
