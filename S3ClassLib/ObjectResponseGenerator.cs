@@ -33,8 +33,8 @@ namespace S3ClassLib
             foreach (ListObjectsRequest listRequest in listObjRequests)
             {
 
-                //do
-                //{
+                do
+                {
                     // Get listResponse for up to 1000 files after marker
                     listResponse = client.ListObjectsAsync(listRequest).GetAwaiter().GetResult();
 
@@ -43,8 +43,8 @@ namespace S3ClassLib
                     objResponses.Add(listResponse);
                     
                 // Set the marker property, continue getting list responses if more than 1000 files exist
-                //listRequest.Marker = listResponse.NextMarker;
-                //} while (listResponse.IsTruncated);
+                listRequest.Marker = listResponse.NextMarker;
+                } while (listResponse.IsTruncated);
 
 
                 

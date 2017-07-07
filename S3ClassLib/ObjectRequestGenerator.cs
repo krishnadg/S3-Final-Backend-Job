@@ -31,15 +31,10 @@ namespace S3ClassLib
         {
             
             //Go through each pair of team name, list of prefixes, generate all corresponding requests 
-            int count = 0;
             foreach (KeyValuePair<string, List<string>> teamNameWithListPrefixes in teamNamesPrefixes)
             {
                GetAllRequestsForSingleTeam(teamNameWithListPrefixes);
-               count++;
-               if (count == 5)
-               {
-                   return;
-               }
+               
             }
             
             

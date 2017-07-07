@@ -15,4 +15,4 @@ spec:
       - name: s3-job
         image: 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
         command: ["sleep"]
-        args: ["300"]
+        args: ["30000"]
