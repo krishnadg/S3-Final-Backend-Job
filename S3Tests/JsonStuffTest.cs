@@ -73,6 +73,26 @@ namespace S3Tests
 
         }
 
+        [Fact]
+        public void TestS3Leaderboard()
+        {
+
+            Dictionary<string, long> teamNamesAndStorage = new Dictionary<string, long>();
+            teamNamesAndStorage.Add("Team-ddos", 123124);
+            teamNamesAndStorage.Add("Team-ddasdfos", 4124);
+
+
+
+            long totalBucketStorage = 12341234;
+            DateTime leaderboardDate = DateTime.Now;
+
+
+            var leaderboard = new S3Leaderboard(teamNamesAndStorage, totalBucketStorage, leaderboardDate);
+
+            string json = JsonConvert.SerializeObject(teamNamesAndStorage);
+            Assert.True(false, json);
+        }
+
 
     }
 }

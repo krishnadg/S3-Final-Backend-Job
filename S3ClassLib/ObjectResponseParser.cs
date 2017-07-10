@@ -80,8 +80,8 @@ namespace S3ClassLib
         public void AddJsonFileToS3(AmazonS3Client client)
         {
 
-            S3Leaderboard s3board = new S3Leaderboard(teamsStorage, totalBucketStorage, DateTime.Now);
-            string jsonString = JsonConvert.SerializeObject(s3board);
+            teamsStorage.Add("Total Storage", totalBucketStorage);
+            string jsonString = JsonConvert.SerializeObject(teamsStorage);
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
             var jsonFileKey = bucketPrefix + "-leaderboard-data/S3-Leaderboard/" + currentDateTime.ToString() + ".json";
@@ -92,7 +92,7 @@ namespace S3ClassLib
             {
                 BucketName = "datalens-leaderboard",
                 Key = jsonFileKey,
-                ContentBody = "hello test blah" + jsonString,
+                ContentBody = jsonString,
                 
             };
             
