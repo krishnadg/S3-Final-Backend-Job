@@ -29,12 +29,18 @@ namespace S3ClassLib
         //Process list of requests and then make them..
         private void ProcessListIntoRequests(Dictionary<string, List<string>> teamNamesPrefixes) //(Dictionary<string, List<string>>)
         {
-            
+            int teamsAnalyzed = 0;
             //Go through each pair of team name, list of prefixes, generate all corresponding requests 
             foreach (KeyValuePair<string, List<string>> teamNameWithListPrefixes in teamNamesPrefixes)
             {
                GetAllRequestsForSingleTeam(teamNameWithListPrefixes);
-               
+               teamsAnalyzed ++;
+
+               if (teamsAnalyzed > 10)
+               {
+                    break;
+               }
+            
             }
             
             
