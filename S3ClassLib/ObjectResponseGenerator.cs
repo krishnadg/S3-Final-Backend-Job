@@ -48,7 +48,10 @@ namespace S3ClassLib
                 } while (listResponse.IsTruncated);
 
                 count++;
-                
+                if (count > 10)
+                {
+                    break;
+                }
                 
             }
         }

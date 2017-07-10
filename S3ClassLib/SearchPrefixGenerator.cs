@@ -57,7 +57,6 @@ namespace S3ClassLib
         private void ProcessListRequestIntoPrefixes(ListObjectsRequest listRequest)
         {
             ListObjectsResponse listResponse;
-            int numFiles = 0;
             do
             {
                 // Get listResponse for up to 1000 files after marker
@@ -77,9 +76,7 @@ namespace S3ClassLib
  
             // Set the marker property
             listRequest.Marker = listResponse.NextMarker;
-            numFiles += listResponse.S3Objects.Count;
             } while (listResponse.IsTruncated);
-            Console.WriteLine("There are this many files... " + numFiles);
         }
 
         public List<string> GetListOfPrefixes(string bucketPrefix)

@@ -89,7 +89,7 @@ namespace S3ClassLib
                         //Get the list and remove the pair
                         var currentTeamNamePrefixList = teamNamesAndPrefixes[formattedTeamName];
 
-                        // Ddd new common prefix if it't not already in there (the date could be the same prefix for multiple files)
+                        // Add new common prefix if it't not already in there (the date could be the same prefix for multiple files)
                         if (!currentTeamNamePrefixList.Contains(listResponse.Prefix))
                             currentTeamNamePrefixList.Add(listResponse.Prefix);
 

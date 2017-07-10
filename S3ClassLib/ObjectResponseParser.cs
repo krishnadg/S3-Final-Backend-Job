@@ -81,10 +81,10 @@ namespace S3ClassLib
         {
 
             S3Leaderboard s3board = new S3Leaderboard(teamsStorage, totalBucketStorage, DateTime.Now);
-            string jsonString = s3board.GetJson();
+            string jsonString = JsonConvert.SerializeObject(s3board);
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
-            var jsonFileKey = bucketPrefix + "-leaderboard-data/S3-Leaderboard/" + currentDateTime.ToString();
+            var jsonFileKey = bucketPrefix + "-leaderboard-data/S3-Leaderboard/" + currentDateTime.ToString() + ".json";
 
                         
 
@@ -92,7 +92,7 @@ namespace S3ClassLib
             {
                 BucketName = "datalens-leaderboard",
                 Key = jsonFileKey,
-                ContentBody = jsonString,
+                ContentBody = "hello test blah" + jsonString,
                 
             };
             

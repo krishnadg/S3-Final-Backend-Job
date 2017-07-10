@@ -22,10 +22,7 @@ public class S3Leaderboard
         leaderboardDate = _leaderboardDate;
     }
 
-    public string GetJson()
-    {
-        return JsonConvert.SerializeObject(this);
-    }
+  
 
 
 }
