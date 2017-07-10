@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 namespace S3ClassLib
 {
     public class ObjectResponseParser
@@ -81,10 +82,10 @@ namespace S3ClassLib
         {
 
             teamsStorage.Add("Total Storage", totalBucketStorage);
-            string jsonString = JsonConvert.SerializeObject(teamsStorage);
+            string jsonString = JsonConvert.SerializeObject(teamsStorage;
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
-            var jsonFileKey = bucketPrefix + "-leaderboard-data/S3-Leaderboard/" + currentDateTime.ToString() + ".json";
+            var jsonFileKey = bucketPrefix + "s3-leaderboard-data/" + currentDateTime.ToString() + ".json";
 
                         
 

@@ -90,7 +90,7 @@ namespace S3Tests
             var leaderboard = new S3Leaderboard(teamNamesAndStorage, totalBucketStorage, leaderboardDate);
 
             string json = JsonConvert.SerializeObject(teamNamesAndStorage);
-            Assert.True(false, json);
+            Assert.True(true, json);
         }
 
 

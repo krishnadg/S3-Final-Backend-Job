@@ -36,11 +36,7 @@ namespace S3ClassLib
                GetAllRequestsForSingleTeam(teamNameWithListPrefixes);
                teamsAnalyzed ++;
 
-               if (teamsAnalyzed > 5)
-               {
-                    break;
-               }
-            
+               
             }
             
             
