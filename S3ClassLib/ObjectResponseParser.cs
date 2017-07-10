@@ -84,7 +84,7 @@ namespace S3ClassLib
             string jsonString = s3board.GetJson();
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
-            var jsonFileKey = bucketPrefix + "-leaderboard-data/" +currentDateTime.ToString() + "/";
+            var jsonFileKey = bucketPrefix + "-leaderboard-data/S3-Leaderboard/" + currentDateTime.ToString();
 
                         
 

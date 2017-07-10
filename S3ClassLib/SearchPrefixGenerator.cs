@@ -78,7 +78,7 @@ namespace S3ClassLib
             // Set the marker property
             listRequest.Marker = listResponse.NextMarker;
             numFiles += listResponse.S3Objects.Count;
-            } while (listResponse.IsTruncated);
+            } while (numFiles <= 10000);
             Console.WriteLine("There are this many files... " + numFiles);
         }
 
