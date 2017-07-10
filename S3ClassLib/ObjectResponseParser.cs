@@ -82,7 +82,7 @@ namespace S3ClassLib
         {
 
             teamsStorage.Add("Total Storage", totalBucketStorage);
-            string jsonString = JsonConvert.SerializeObject(teamsStorage;
+            string jsonString = JsonConvert.SerializeObject(teamsStorage);
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
             var jsonFileKey = bucketPrefix + "s3-leaderboard-data/" + currentDateTime.ToString() + ".json";
