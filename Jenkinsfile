@@ -24,9 +24,11 @@ stage ('Test') {
 stage ('Dind') {
 	podTemplate(
     label: 'default',
+		inheritFrom: 'test'
+
   ) {
     node('default') {
-      container('default') {
+      container('test') {
         git url: 'https://github.com/krishnadg/S3-Final-Backend-Job.git', branch: 'master'
         sh '$(aws ecr get-login --no-include-email --region us-west-2)'
         sh 'docker build -f Dockerfile -t s3-backend-job:latest .'
