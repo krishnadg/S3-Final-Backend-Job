@@ -23,44 +23,19 @@ stage ('Test') {
 
 stage ('Dind') {
 	podTemplate(
-    label: 'default',
-		inheritFrom: 'test'
-
+    label: 'docker-build',
+    inheritFrom: 'test',
   ) {
-    node('default') {
+    node('docker-build') {
       container('test') {
-        git url: 'https://github.com/krishnadg/S3-Final-Backend-Job.git', branch: 'master'
-        sh '$(aws ecr get-login --no-include-email --region us-west-2)'
-        sh 'docker build -f Dockerfile -t s3-backend-job:latest .'
-        sh 'docker tag s3-backend-job:latest 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job'
-        sh 'docker push 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job'
-
+        checkout scm
+        sh '''
+          $(aws ecr get-login --no-include-email --region us-west-2)
+          docker build -f Dockerfile -t s3-backend-job:latest .
+          docker tag s3-backend-job:latest 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+          docker push 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+        '''
       }
     }
   }
 }
-
-
-/*stage ('Build-Docker-Image') {
-	podTemplate(
-		label: 'docker-build-pod',
-		containers: [
-			containerTemplate(
-				name: 'docker-image',
-				image: 'docker:latest',
-				ttyEnabled: true,
-				command: 'cat',
-				
-			)
-		]
-	) {
-		node('docker-build-pod') {
-			container('docker-image') {
-
-				checkout scm
-				sh 'docker build -f Dockerfile -t s3jobfinal:latest .'
-			}
-		}
-	}
-}
-*/
