@@ -9,11 +9,11 @@ spec:
       labels: 
         app: s3-job
       annotations:
-        kube2iam.beta.nordstrom.net/role: arn:aws:iam::543369334115:role/datalens/k8s/platform
+        kube2iam.beta.nordstrom.net/role: arn:aws:iam::092896522805:role/datalens/k8s/platform
     spec: 
       containers:
       - name: s3-job
-        image: 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+        image: 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
         #command: ["dotnet"]
         #args: ["--help"]
         command: ["sleep"]

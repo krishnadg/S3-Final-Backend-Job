@@ -32,8 +32,9 @@ stage ('Dind') {
         git url: 'https://github.com/krishnadg/S3-Final-Backend-Job.git', branch: 'master'
         sh '$(aws ecr get-login --no-include-email --region us-west-2)'
         sh 'docker build -f Dockerfile -t s3-backend-job:latest .'
-        sh 'docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest'
-        sh 'docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest'
+        sh 'docker tag s3-backend-job:latest 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job'
+        sh 'docker push 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job'
+
       }
     }
   }
