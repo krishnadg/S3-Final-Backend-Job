@@ -96,7 +96,7 @@ namespace S3ClassLib
             PutObjectRequest putJsonRequest = new PutObjectRequest
             {
                 BucketName = "datalens-hub",
-                Key = jsonFileKeyWithDate,
+                Key = jsonFileKeyPut,
                 ContentBody = jsonString,
                 
             };
