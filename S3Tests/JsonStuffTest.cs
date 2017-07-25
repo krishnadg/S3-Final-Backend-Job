@@ -66,6 +66,8 @@ namespace S3Tests
           
             var jsonString = JsonConvert.SerializeObject(teamInfo);
 
+
+
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
 
             Assert.True(true, currentDateTime);
@@ -80,6 +82,8 @@ namespace S3Tests
             Dictionary<string, long> teamNamesAndStorage = new Dictionary<string, long>();
             teamNamesAndStorage.Add("Team-ddos", 123124);
             teamNamesAndStorage.Add("Team-ddasdfos", 4124);
+            teamNamesAndStorage.Add("Team-312", 421232124);
+            teamNamesAndStorage.Add("Team-datas", 5124);
 
 
 
@@ -88,6 +92,9 @@ namespace S3Tests
 
 
             var leaderboard = new S3Leaderboard(teamNamesAndStorage, totalBucketStorage, leaderboardDate);
+
+
+            var sortedTeamStorage = from entry in teamNamesAndStorage orderby entry.Value descending select entry;
 
             string json = JsonConvert.SerializeObject(teamNamesAndStorage);
             Assert.True(true, json);

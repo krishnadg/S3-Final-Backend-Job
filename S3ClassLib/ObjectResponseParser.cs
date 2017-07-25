@@ -77,27 +77,44 @@ namespace S3ClassLib
             return teamsStorage;
         }
 
-        //Get Json and maybe put it in S3 Storage...
+        //Get Json and put it in S3 Storage...
         public void AddJsonFileToS3(AmazonS3Client client)
         {
 
-            teamsStorage.Add("Total Storage", totalBucketStorage);
-            string jsonString = JsonConvert.SerializeObject(teamsStorage);
+            teamsStorage.Add("Total-Storage", totalBucketStorage);
+
+            var sortedTeamStorage = from entry in teamsStorage orderby entry.Value descending select entry;
+            string jsonString = JsonConvert.SerializeObject(sortedTeamStorage);
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
-            var jsonFileKey = bucketPrefix + "-leaderboard-data/s3-leaderboard/" + currentDateTime.ToString() + ".json";
+            
+            var jsonFileKeyPut = "leaderboard/s3.json";
 
-                        
+
+            var jsonFileKeyWithDate = "leaderboard/s3-history/" + currentDateTime.ToString() + ".json";
 
             PutObjectRequest putJsonRequest = new PutObjectRequest
             {
-                BucketName = "datalens-leaderboard",
-                Key = jsonFileKey,
+                BucketName = "datalens-hub",
+                Key = jsonFileKeyWithDate,
                 ContentBody = jsonString,
                 
             };
             
+            PutObjectRequest putJsonRequestWithDate = new PutObjectRequest
+            {
+                BucketName = "datalens-hub",
+                Key = jsonFileKeyWithDate,
+                ContentBody = jsonString,
+                
+            };
+
+            
+            
             PutObjectResponse putJsonResponse = client.PutObjectAsync(putJsonRequest).GetAwaiter().GetResult();
+
+            PutObjectResponse putJsonResponse2 = client.PutObjectAsync(putJsonRequestWithDate).GetAwaiter().GetResult();
+
             
         }
 

@@ -14,11 +14,10 @@ spec:
       containers:
       - name: s3-job
         image: 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-        imagePullPolicy: Always
-        command: ["sleep"]
-        args: ["30000"]
         #command: ["dotnet"]
         #args: ["--help"]
+        command: ["sleep"]
+        args: ["30000"]
         #command: ["dotnet run --project S3ClassLib/S3ClassLib.csproj"]
         #args: ["datalens-logs",  "prod"]
 
