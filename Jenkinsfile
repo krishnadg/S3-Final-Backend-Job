@@ -28,7 +28,7 @@ podTemplate(
 		stage ('Test S3 Job') 
 		{
 			container('dotnet-core') {
-			  //sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
+			     //sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
 			}		
 		}
 
@@ -52,8 +52,8 @@ podTemplate(
 					'''
 					sh '''
 						docker build -f Dockerfile -t s3-backend-job:latest .
-						docker tag s3-backend-job:latest ${REPO_ACCT}.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-						docker push ${REPO_ACCT}.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+						docker tag s3-backend-job:latest ${params.REPO_ACCT}.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+						docker push ${params.REPO_ACCT}.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
 					'''
 			}
 		}
