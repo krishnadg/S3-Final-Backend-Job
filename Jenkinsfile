@@ -13,7 +13,7 @@ podTemplate(
 		containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, command: 'cat', privileged: true),
 	],
 	annotations: [
-		podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: "arn:aws:iam::543369334115:role/datalens/k8s/platform")
+		podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: ${ROLE_ACCT})
 	], 
 	volumes: [
 		emptyDirVolume(mountPath: '/var/lib/docker', memory: false),
@@ -52,7 +52,7 @@ podTemplate(
 					'''
 					sh '''
 						docker build -f Dockerfile -t s3-backend-job:latest .
-						docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+						docker tag s3-backend-job:latest ${REPO_ACCT}:latest
 						docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
 					'''
 			}
