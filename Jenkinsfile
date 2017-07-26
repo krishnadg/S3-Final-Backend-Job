@@ -13,7 +13,7 @@ podTemplate(
 		containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, command: 'cat', privileged: true),
 	],
 	annotations: [
-		podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: "arn:aws:iam::543369334115:role/datalens/k8s/platform")
+		podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: ${env.K2IAM_ROLE_V2_NONPROD})
 	], 
 	volumes: [
 		emptyDirVolume(mountPath: '/var/lib/docker', memory: false),
