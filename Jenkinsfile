@@ -1,3 +1,9 @@
+properties([
+  parameters([string(description: 'IAM Role Account', name: 'ROLE_ACCT'),
+	string(description: 'Repository Account', name: 'REPO_ACCT')])
+])
+
+
 podTemplate(
 	name: 'dotnet-and-docker',
 	label: 'dotnet-and-docker',
