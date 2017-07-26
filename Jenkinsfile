@@ -31,7 +31,7 @@ podTemplate(
 			container('awscli')
 			{
 				sh '''
-				aws ecr get-login --no-include-email --region '${env.AWS_REGION}' > ecr-login
+				aws ecr get-login --no-include-email --region us-west-2 > ecr-login
 				'''
 			}
 		}
