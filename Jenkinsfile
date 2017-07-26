@@ -21,7 +21,7 @@
 					checkout scm
 					sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
 				}
-				stage ('Dind') {
+				stage ('PushImage') {
 					container('test') {
 						checkout scm
 							sh '''
