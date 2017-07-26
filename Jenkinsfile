@@ -28,7 +28,7 @@ podTemplate(
 		stage ('Test S3 Job') 
 		{
 			container('dotnet-core') {
-				//sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
+			  //sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
 			}		
 		}
 
