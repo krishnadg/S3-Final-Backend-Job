@@ -32,8 +32,8 @@ stage ('Dind') {
         sh '''
           $(aws ecr get-login --no-include-email --region us-west-2)
           docker build -f Dockerfile -t s3-backend-job:latest .
-          docker tag s3-backend-job:latest 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-          docker push 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+          docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+          docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
         '''
       }
     }
