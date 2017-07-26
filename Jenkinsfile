@@ -16,13 +16,13 @@ stage ('S3 Backend Job')
 		]		
 	)
 	{
-		node('dotnet-core-pod') {
+		node('dotnet-and-docker') {
+			checkout scm
 
-			stage ('Test') 
+			stage ('Test S3 Job') 
 			{
 				container('dotnet-core') {
 
-					checkout scm
 					//sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
 				}		
 			}
