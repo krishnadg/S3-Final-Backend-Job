@@ -17,15 +17,15 @@ using Newtonsoft.Json;
          static void Main(string[] args) {
 
           
+            Console.WriteLine("Received args " +  args.Length);
 
+            string bucket = args[0]; //Bucket can be obtained from main arguments later..
+            string bucketPrefix = args[1];
 
-            
             //Initialze necessary object for injection to S3Job object
             AmazonS3Client client = new AmazonS3Client();
             
-            Console.WriteLine("Received args " +  args.Length);
-            string bucket = args[0]; //Bucket can be obtained from main arguments later..
-            string bucketPrefix = args[1];
+           
             //Initialize S3Job object and assign it bucket
             S3Job s3JobDoer = new S3Job(client, bucket, bucketPrefix);
 
