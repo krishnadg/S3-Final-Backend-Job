@@ -13,7 +13,7 @@
 		]
 	)
 {
-	stage ('Test') {
+	stage ('Test') 
 	{
 			node('dotnet-core-pod') {
 				container('dotnet-core') {
@@ -36,4 +36,3 @@
 			}
 		}
 	}
-}
