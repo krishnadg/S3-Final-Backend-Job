@@ -17,18 +17,19 @@ stage ('S3 Backend Job')
 	)
 	{
 		node('dotnet-and-docker') {
-			checkout scm
 
 			stage ('Test S3 Job') 
 			{
 				container('dotnet-core') {
 
+					checkout scm
 					//sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
 				}		
 			}
 
 			stage ('PushImage') {
 				container('test') {
+					checkout scm
 						sh '''
 							$(aws ecr get-login --no-include-email --region us-west-2)						
 							docker build -f Dockerfile -t s3-backend-job:latest .
