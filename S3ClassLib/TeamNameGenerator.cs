@@ -51,6 +51,8 @@ namespace S3ClassLib
                     BucketName = bucket
                 };
                 ProcessListRequestIntoTeams(listRequest);
+
+                break;
             }
 
            
