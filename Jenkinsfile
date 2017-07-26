@@ -16,10 +16,9 @@
 				command: 'cat'
 			)
 		],
-	 
-	annotations: [
-		podAnnotation(key: "", value: "my-value")
-	]
+		annotations: [
+			podAnnotation(key: "", value: "my-value")
+		]
 	)
 {
 	node('dotnet-core-pod') {
