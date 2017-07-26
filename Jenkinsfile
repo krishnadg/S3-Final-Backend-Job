@@ -20,7 +20,7 @@
 stage ('Test') {
 	podTemplate(
 		label: 'dotnet-core-pod',
-		inheritFrom: 'jnlp',
+		inheritFrom: 'test',
 		containers: [
 			containerTemplate(
 				
@@ -38,25 +38,28 @@ stage ('Test') {
 				checkout scm
 				sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
 			}
+			stage ('Dind') {
+				container('test') {
+					checkout scm
+						sh '''
+							$(aws ecr get-login --no-include-email --region us-west-2)
+							docker build -f Dockerfile -t s3-backend-job:latest .
+							docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+							docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+						'''
+					}
 		}
 	}
 }
+}
 
-// stage ('Dind') {
+
 // 	podTemplate(
-//     label: 'default',
+//     label: 'dockerpush',
 //     inheritFrom: 'test',
 //   ) {
-//     node('default') {
-//       container('test') {
-//         checkout scm
-//         sh '''
-//           $(aws ecr get-login --no-include-email --region us-west-2)
-//           docker build -f Dockerfile -t s3-backend-job:latest .
-//           docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-//           docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-//         '''
-//       }
+//     node('dockerpush') {
+      
 //     }
 //   }
 // }
