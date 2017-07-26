@@ -23,10 +23,10 @@ stage ('Test') {
 
 stage ('Dind') {
 	podTemplate(
-    label: 'docker-build',
+    label: 'default',
     inheritFrom: 'test',
   ) {
-    node('docker-build') {
+    node('default') {
       container('test') {
         checkout scm
         sh '''
