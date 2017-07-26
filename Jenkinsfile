@@ -2,7 +2,7 @@ stage ('S3 Backend Job')
 {
 	podTemplate(
 		label: 'dotnet-core-pod',
-		// inheritFrom: 'test',
+		inheritFrom: 'test',
 		containers: [
 			containerTemplate(			
 				name: 'dotnet-core',
