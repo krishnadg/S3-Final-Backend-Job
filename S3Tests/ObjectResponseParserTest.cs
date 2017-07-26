@@ -90,8 +90,9 @@ namespace S3Tests
             listResponsesArgs.Add(client.GetFakeListResponseTeam1()); //Static List Response from AWSClient.cs
            
             var team1Data = 194;
+            var totalStorage = 194;
             expected.Add("Team1", team1Data);
-            
+            expected.Add("Total-Storage", totalStorage);
             
             //ACT
 
@@ -115,10 +116,14 @@ namespace S3Tests
             var team1Size = 900;
             var team2Size = 1004;
             var team3Size = 100024;
+            var totalStorage = 101928;
 
             expected.Add("Team1", team1Size);
             expected.Add("Team2", team2Size);
             expected.Add("Team3", team3Size);
+            expected.Add("Total-Storage", totalStorage);
+
+
 
             
             //ACT

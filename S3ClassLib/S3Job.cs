@@ -34,6 +34,7 @@ namespace S3ClassLib
             return oldBucket;
         }
 
+        //Does S3 job, returns dictionary of teamname, storage value - to be sent to json constructor for further readability on front end
         public Dictionary<string, long> DoS3Job()
         {
 
@@ -49,7 +50,6 @@ namespace S3ClassLib
             ObjectRequestGenerator objRequestGen = new ObjectRequestGenerator(bucket);
             List<ListObjectsRequest> objRequests = objRequestGen.GetObjectRequestList(teamNames);
             Console.WriteLine( objRequests.Count + " ListObjectRequests Generated...");
-
             
             //Make said requests and store the corresponding list responses
             ObjectResponseGenerator objResponseGen = new ObjectResponseGenerator(client);
@@ -62,14 +62,16 @@ namespace S3ClassLib
             ObjectResponseParser objResponseParser = new ObjectResponseParser(bucketPrefix);
             Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
             Console.WriteLine("Responses Parsed");
-            objResponseParser.AddJsonFileToS3(client);
+
             //Print Data to Console
             objResponseParser.PrintData();
+
+            JsonFileConstructor jsonConstructor = new JsonFileConstructor();
+            jsonConstructor.AddJsonFileToS3(client, teamStorageData);
+
+          
             
             return teamStorageData;
-            
-
-
         }
 
 

@@ -101,5 +101,56 @@ namespace S3Tests
         }
 
 
+            [Fact]
+            public void TestFinalJsonObject()
+            {
+
+                var teamData1 = new TeamData
+                {
+                    team = "datavision",
+                    sub_team = "datavision-web",
+                    value = 33000000
+                };
+
+                var teamData2 = new TeamData
+                {
+                    team = "datavision",
+                    sub_team = "datavision-sid",
+                    value = 400000
+                };
+
+                var metaData = new MetaData()
+                {
+                    period = "total",
+                    unit = "bytes",
+                    name = "S3"
+                };
+
+                TeamData[] data = new TeamData[]
+                {
+                    teamData1,teamData2
+                };
+
+
+
+                var rootObj = new FinalJsonRoot()
+                {
+                    results = data,
+                    meta = metaData
+                    
+                };
+
+
+                string json = JsonConvert.SerializeObject(rootObj);
+
+
+                Assert.True(true, json);
+
+            }
+
     }
+
+
+
+    
 }

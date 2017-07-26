@@ -21,6 +21,13 @@ namespace S3ClassLib
             bucketPrefix = _bucketPrefix;
         }
 
+        //Parse the list of object responses, return the data structure
+        public Dictionary<string, long> GetDataStructure(List<ListObjectsResponse> listObjResponses)
+        {
+            ParseListObjectResponses(listObjResponses);
+            return teamsStorage;
+        }
+
         private void ParseListObjectResponses(List<ListObjectsResponse> listObjResponses)
         {
             //Change this value based on the name of the bucket stored in, ex "TestBucket/YY_MM_DD/teamname/files", lengthOfPrefixUpToTeamName = 20
@@ -34,6 +41,10 @@ namespace S3ClassLib
                 
                 ParseObjectResponse(listResponse, teamName);
             }
+
+            //Add final total storage key/value
+            teamsStorage.Add("Total-Storage", totalBucketStorage);
+
 
         }
 
@@ -70,54 +81,9 @@ namespace S3ClassLib
         }
 
 
-        //Parse the list of object responses, return the data structure
-        public Dictionary<string, long> GetDataStructure(List<ListObjectsResponse> listObjResponses)
-        {
-            ParseListObjectResponses(listObjResponses);
-            return teamsStorage;
-        }
+      
 
-        //Get Json and put it in S3 Storage...
-        public void AddJsonFileToS3(AmazonS3Client client)
-        {
-
-            teamsStorage.Add("Total-Storage", totalBucketStorage);
-
-            var sortedTeamStorage = from entry in teamsStorage orderby entry.Value descending select entry;
-            string jsonString = JsonConvert.SerializeObject(sortedTeamStorage);
-
-            var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
-            
-            var jsonFileKeyPut = "leaderboard/s3.json";
-
-
-            var jsonFileKeyWithDate = "leaderboard/s3-history/" + currentDateTime.ToString() + ".json";
-
-            PutObjectRequest putJsonRequest = new PutObjectRequest
-            {
-                BucketName = "datalens-hub",
-                Key = jsonFileKeyPut,
-                ContentBody = jsonString,
-                
-            };
-            
-            PutObjectRequest putJsonRequestWithDate = new PutObjectRequest
-            {
-                BucketName = "datalens-hub",
-                Key = jsonFileKeyWithDate,
-                ContentBody = jsonString,
-                
-            };
-
-            
-            
-            PutObjectResponse putJsonResponse = client.PutObjectAsync(putJsonRequest).GetAwaiter().GetResult();
-
-            PutObjectResponse putJsonResponse2 = client.PutObjectAsync(putJsonRequestWithDate).GetAwaiter().GetResult();
-
-            
-        }
-
+       
 
         //For console printing/test purposes only, not meant for deployment
         public void PrintData()
