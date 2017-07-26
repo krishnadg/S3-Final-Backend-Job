@@ -20,8 +20,10 @@
 stage ('Test') {
 	podTemplate(
 		label: 'dotnet-core-pod',
+		inheritFrom: 'jnlp'
 		containers: [
 			containerTemplate(
+				
 				name: 'dotnet-core',
 				image: 'microsoft/dotnet:1.1.2-sdk',
 				ttyEnabled: true,
