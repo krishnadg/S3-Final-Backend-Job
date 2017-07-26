@@ -1,11 +1,3 @@
-// 	properties([
-// 	parameters([
-// 		string(description: 'IAM Role', name: 'Role')
-// 	])
-// ])
-	
-
-
 stage ('S3 Backend Job')
 {
 	podTemplate(
