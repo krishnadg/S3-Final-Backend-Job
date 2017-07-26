@@ -31,7 +31,7 @@ stage ('S3 Backend Job')
 				container('dotnet-core') {
 
 					checkout scm
-					sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
+					//sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
 				}		
 			}
 
