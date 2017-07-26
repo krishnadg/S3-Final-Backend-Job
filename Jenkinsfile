@@ -14,7 +14,7 @@
 				name: 'dotnet-core',
 				image: 'microsoft/dotnet:1.1.2-sdk',
 				ttyEnabled: true,
-				command: 'cat',
+				command: 'cat'
 				
 			)
 		]
