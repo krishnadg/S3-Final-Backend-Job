@@ -1,8 +1,8 @@
-	properties([
-	parameters([
-		string(description: 'IAM Role', name: 'Role')
-	])
-])
+// 	properties([
+// 	parameters([
+// 		string(description: 'IAM Role', name: 'Role')
+// 	])
+// ])
 	
 	
 	podTemplate(
@@ -17,8 +17,7 @@
 			)
 		],
 		annotations: [
-			podAnnotation(key: "", value: "my-value")
-		]
+ 			podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: "arn:aws:iam::543369334115:role/datalens/k8s/platform")]		
 	)
 {
 	node('dotnet-core-pod') {
