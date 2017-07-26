@@ -5,20 +5,20 @@
 // ])
 	
 	
-	podTemplate(
-		label: 'dotnet-core-pod',
-		inheritFrom: 'test',
-		containers: [
-			containerTemplate(			
-				name: 'dotnet-core',
-				image: 'microsoft/dotnet:1.1.2-sdk',
-				ttyEnabled: true,
-				command: 'cat'
-			)
-		],
-		annotations: [
- 			podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: "arn:aws:iam::543369334115:role/datalens/k8s/platform")]		
-	)
+podTemplate(
+	label: 'dotnet-core-pod',
+	inheritFrom: 'test',
+	containers: [
+		containerTemplate(			
+			name: 'dotnet-core',
+			image: 'microsoft/dotnet:1.1.2-sdk',
+			ttyEnabled: true,
+			command: 'cat'
+		)
+	],
+	annotations: [
+		podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: "arn:aws:iam::543369334115:role/datalens/k8s/platform")]		
+)
 {
 	node('dotnet-core-pod') {
 
