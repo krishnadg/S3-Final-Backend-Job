@@ -1,44 +1,57 @@
-stage ('S3 Backend Job')
+podTemplate(
+	name: 'dotnet-and-docker',
+	label: 'dotnet-and-docker',
+	containers: [
+		containerTemplate(name: 'dotnet-core',image: 'microsoft/dotnet:1.1.2-sdk',ttyEnabled: true,command: 'cat'), 
+		containerTemplate(name: 'awscli', image: 'teardrop/awscli', ttyEnabled: true, command: 'cat'),
+		containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, command: 'cat', privileged: true),
+	],
+	annotations: [
+		podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: "arn:aws:iam::543369334115:role/datalens/k8s/platform")
+	], 
+	volumes: [
+		emptyDirVolume(mountPath: '/var/lib/docker', memory: false),
+		hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
+	]		
+)
 {
-	podTemplate(
-		label: 'dotnet-and-docker',
-		inheritFrom: 'test',
-		containers: [
-			containerTemplate(			
-				name: 'dotnet-core',
-				image: 'microsoft/dotnet:1.1.2-sdk',
-				ttyEnabled: true,
-				command: 'cat'
-			)
-		],
-		annotations: [
-			podAnnotation(key: "kube2iam.beta.nordstrom.net/role", value: "arn:aws:iam::543369334115:role/datalens/k8s/platform")
-		]		
-	)
-	{
-		node('dotnet-and-docker') {
+	node('dotnet-and-docker') {
 
-			stage ('Test S3 Job') 
+		checkout scm
+
+		stage ('Test S3 Job') 
+		{
+			container('dotnet-core') {
+				//sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
+			}		
+		}
+
+		stage ('AWS Install')
+		{
+			container('awscli')
 			{
-				container('dotnet-core') {
-
-					checkout scm
-					//sh 'dotnet restore && dotnet test S3Tests/S3Tests.csproj --filter Category!=Integration'
-				}		
+				sh ''''
+				aws ecr get-login --no-include-email --region '${env.AWS_REGION}' > ecr-login
+				'''
 			}
+		}
 
-			stage ('PushImage') {
-				container('test') {
-					checkout scm
-						sh '''
-							$(aws ecr get-login --no-include-email --region us-west-2)						
-							docker build -f Dockerfile -t s3-backend-job:latest .
-							docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-							docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-						'''
-				}
+		stage ('Docker build and push image')
+		{
+			container('docker')
+			{
+					sh '''
+							set +x
+							eval $(cat ecr-login)
+					'''
+					sh '''
+						docker build -f Dockerfile -t s3-backend-job:latest .
+						docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+						docker push 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
+					'''
 			}
 		}
 	}
 }
+
 
