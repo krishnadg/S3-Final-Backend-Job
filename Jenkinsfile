@@ -14,7 +14,7 @@
 	)
 {
 	stage ('Test') 
-	{
+{
 			node('dotnet-core-pod') {
 				container('dotnet-core') {
 
@@ -25,7 +25,6 @@
 					container('test') {
 						checkout scm
 							sh '''
-								sleep 700
 								$(aws ecr get-login --no-include-email --region us-west-2)
 								docker build -f Dockerfile -t s3-backend-job:latest .
 								docker tag s3-backend-job:latest 543369334115.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
