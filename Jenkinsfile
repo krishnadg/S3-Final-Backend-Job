@@ -9,19 +9,18 @@
 		label: 'dotnet-core-pod',
 		inheritFrom: 'test',
 		containers: [
-			containerTemplate(
-				
+			containerTemplate(			
 				name: 'dotnet-core',
 				image: 'microsoft/dotnet:1.1.2-sdk',
 				ttyEnabled: true,
 				command: 'cat'
-				
 			)
-		]
-	), 
+		],
+	 
 	annotations: [
 		podAnnotation(key: "", value: "my-value")
 	]
+	)
 {
 	node('dotnet-core-pod') {
 
