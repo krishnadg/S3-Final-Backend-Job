@@ -48,7 +48,6 @@ namespace S3ClassLib
                 } while (listResponse.IsTruncated);
 
                 count++;
-                break;                
             }
         }
 

@@ -74,6 +74,7 @@ namespace S3ClassLib
                         preTeamPrefixes.Add(commonPrefix);
                 }
  
+            break; //this will limit 1 date multiple teams...
             // Set the marker property
             listRequest.Marker = listResponse.NextMarker;
             } while (listResponse.IsTruncated);
