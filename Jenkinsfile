@@ -49,11 +49,11 @@ podTemplate(
 							set +x
 							eval $(cat ecr-login)
 					'''
-					sh '''
+					sh """
 						docker build -f Dockerfile -t s3-backend-job:latest .
 						docker tag s3-backend-job:latest ${params.REPO_ACCT}.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
 						docker push ${params.REPO_ACCT}.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
-					'''
+					"""
 			}
 		}
 	}
