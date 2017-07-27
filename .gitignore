@@ -30,3 +30,13 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+S3Tests/bin/Debug/netcoreapp1.1/S3Tests.pdb
+S3ClassLib/bin/Debug/netcoreapp1.1/S3ClassLib.dll
+S3ClassLib/bin/Debug/netcoreapp1.1/S3ClassLib.pdb
+S3ClassLib/obj/Debug/netcoreapp1.1/S3ClassLib.dll
+S3ClassLib/obj/Debug/netcoreapp1.1/S3ClassLib.pdb
+S3Tests/bin/Debug/netcoreapp1.1/S3ClassLib.dll
+S3Tests/bin/Debug/netcoreapp1.1/S3ClassLib.pdb
+S3Tests/bin/Debug/netcoreapp1.1/S3Tests.dll
+S3Tests/obj/Debug/netcoreapp1.1/S3Tests.dll
+S3Tests/obj/Debug/netcoreapp1.1/S3Tests.pdb
