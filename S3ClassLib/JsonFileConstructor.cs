@@ -48,7 +48,7 @@ namespace S3ClassLib
             string jsonString = JsonConvert.SerializeObject(rootObj);
 
             
-            var jsonFileKeyPut = "leaderboard/s3.json";
+            var jsonFileKeyPut = "leaderboard/s3Test.json";
 
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
