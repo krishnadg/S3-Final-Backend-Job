@@ -3,7 +3,6 @@ using Amazon.S3.Model;
 using Amazon.Runtime;
 using System;
 using System.Threading.Tasks;
-using System.Diagnostics.Contracts;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
