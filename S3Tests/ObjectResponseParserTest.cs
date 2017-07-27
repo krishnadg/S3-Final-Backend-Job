@@ -92,7 +92,7 @@ namespace S3Tests
             var team1Data = 194;
             var totalStorage = 194;
             expected.Add("Team1", team1Data);
-            expected.Add("Total-Storage", totalStorage);
+            //expected.Add("Total-Storage", totalStorage);
             
             //ACT
 
@@ -121,7 +121,7 @@ namespace S3Tests
             expected.Add("Team1", team1Size);
             expected.Add("Team2", team2Size);
             expected.Add("Team3", team3Size);
-            expected.Add("Total-Storage", totalStorage);
+            //expected.Add("Total-Storage", totalStorage);
 
 
 
