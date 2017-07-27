@@ -42,8 +42,8 @@ namespace S3ClassLib
                 ParseObjectResponse(listResponse, teamName);
             }
 
-            //Add final total storage key/value
-            teamsStorage.Add("Total-Storage", totalBucketStorage);
+            //Add final total storage key/value (or don't, dylann doesnt want it)
+            //teamsStorage.Add("Total-Storage", totalBucketStorage);
 
 
         }
