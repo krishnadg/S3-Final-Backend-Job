@@ -52,7 +52,7 @@ namespace S3ClassLib
 
 
             var currentDateTime = DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year;
-            var jsonFileKeyWithDate = "leaderboard/s3-history/" + currentDateTime.ToString() + ".json";
+            var jsonFileKeyWithDate = "leaderboard/s3-history/" + currentDateTime + ".json";
 
 
             //Put both files, one with date, one as most recent to be used by hub leaderboard
