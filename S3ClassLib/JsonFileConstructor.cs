@@ -71,6 +71,11 @@ namespace S3ClassLib
                 ContentBody = jsonString,
                 
             };
+
+            var resp = client.PutObjectAsync(putJsonRequest);
+            var resp2 = client.PutObjectAsync(putJsonRequestWithDate);
+
+
         }
 
         //Sort dictionary and convert into array of TeamData for json root object's results field
