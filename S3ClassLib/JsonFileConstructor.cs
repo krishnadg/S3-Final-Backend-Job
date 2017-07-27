@@ -72,9 +72,9 @@ namespace S3ClassLib
                 
             };
 
-            var resp = client.PutObjectAsync(putJsonRequest);
-            var resp2 = client.PutObjectAsync(putJsonRequestWithDate);
-            Console.WriteLine("Tried putting files in S3 (asyncronously)" + resp.Status);
+            var resp = client.PutObjectAsync(putJsonRequest).GetAwaiter().GetResult();
+            var resp2 = client.PutObjectAsync(putJsonRequestWithDate).GetAwaiter().GetResult();
+            Console.WriteLine("Tried putting files in S3 (asyncronously), code: " + resp.HttpStatusCode);
 
 
 
