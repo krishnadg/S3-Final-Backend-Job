@@ -3,15 +3,25 @@ kind: CronJob
 metadata:
     name: s3-job
 spec:
-  schedule: "15 * * * *"
+  schedule: "21 * * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels: 
+            app: s3-job
+          annotations:
+            kube2iam.beta.nordstrom.net/role: arn:aws:iam::092896522805:role/datalens/k8s/platform
         spec: 
           containers:
           - name: s3-job
             image: 092896522805.dkr.ecr.us-west-2.amazonaws.com/s3-backend-job:latest
             imagePullPolicy: Always
             args: ["datalens-logs" , "prod"]
+          restartPolicy: Never
+
+            
+            
+
