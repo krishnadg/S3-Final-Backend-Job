@@ -63,13 +63,13 @@ namespace S3ClassLib
             Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
             Console.WriteLine("Responses Parsed");
 
-            //Print Data to Console
-            objResponseParser.PrintData();
+            
 
             JsonFileConstructor jsonConstructor = new JsonFileConstructor();
             jsonConstructor.AddJsonFileToS3(client, teamStorageData);
-
-          
+            
+            //Print Data to Console
+            objResponseParser.PrintData();
             
             return teamStorageData;
         }

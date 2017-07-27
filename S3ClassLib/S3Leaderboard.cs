@@ -7,7 +7,7 @@ using System.Diagnostics.Contracts;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-//The class used to serialize the json of whatever s3 data desired
+//The class used to serialize the json of whatever s3 data desired (currently unused...)
 public class S3Leaderboard
 {
     Dictionary<string, long> teamNamesAndStorage;
