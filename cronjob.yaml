@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
     name: s3-job
 spec:
-  schedule: "21 * * * *"
+  schedule: "11,26,41,56 * * * *"
   successfulJobsHistoryLimit: 5
   failedJobsHistoryLimit: 5
   jobTemplate:
