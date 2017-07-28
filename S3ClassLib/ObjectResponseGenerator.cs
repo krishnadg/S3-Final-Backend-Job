@@ -33,6 +33,7 @@ namespace S3ClassLib
             int count = 0;
             foreach (ListObjectsRequest listRequest in listObjRequests)
             {
+                
                 do
                 {
                     Console.WriteLine("\nProcessing Request # " + count);
