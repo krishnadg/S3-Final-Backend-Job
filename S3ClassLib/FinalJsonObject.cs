@@ -35,6 +35,8 @@ namespace S3ClassLib
 
     public class MetaData
     {
+        public string storageType{get;set;}
+
         public string period{get;set;}
 
         public string unit{get;set;}
@@ -42,6 +44,8 @@ namespace S3ClassLib
         public float costPerUnit{get;set;}
 
         public string name{get;set;}
+
+        public DateTime dateEvaluated{get;set;}
 
     }
 

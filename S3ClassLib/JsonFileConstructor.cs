@@ -26,7 +26,10 @@ namespace S3ClassLib
             {
                 period = "all_time",
                 unit = "bytes",
-                name = "S3"
+                name = "S3",
+                dateEvaluated = DateTime.Now,
+                storageType = "blob",
+                costPerUnit = 0
 
             };
 
