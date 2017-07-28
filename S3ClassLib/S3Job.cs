@@ -41,7 +41,7 @@ namespace S3ClassLib
             //Gather all prefixes that are needed to find all team names
             SearchPrefixGenerator searchPrefixGen = new SearchPrefixGenerator(client, bucket);
             List<string> bucketPrefixList = searchPrefixGen.GetListOfPrefixes(bucketPrefix);
-            Console.WriteLine("\nNumber of unique days teams' logs are being stored/number of initial requests being made to find all teams" + bucketPrefixList.Count);
+            Console.WriteLine("\nNumber of unique days teams' logs are being stored/number of initial requests being made to find all teams: " + bucketPrefixList.Count);
 
             //Gather team names in S3 Bucket
             TeamNameGenerator teamNameGen = new TeamNameGenerator(client, bucket);
