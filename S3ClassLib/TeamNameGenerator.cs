@@ -52,7 +52,6 @@ namespace S3ClassLib
                 };
                 ProcessListRequestIntoTeams(listRequest);
 
-                break;
             }
 
            
