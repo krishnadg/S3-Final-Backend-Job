@@ -33,27 +33,32 @@ namespace S3ClassLib
             int count = 0;
             foreach (ListObjectsRequest listRequest in listObjRequests)
             {
-                Console.WriteLine("Processing Request: " + count);
                 do
                 {
+                    Console.WriteLine("\nProcessing Request # " + count);
+
                     // Get listResponse for up to 1000 files after marker
                     listResponse = client.ListObjectsAsync(listRequest).GetAwaiter().GetResult();
 
-                    // Add list response 
-                    listResponse = client.ListObjectsAsync(listRequest).GetAwaiter().GetResult();
+                    // Added response to objresponses list
                     objResponses.Add(listResponse);
                     
-                // Set the marker property, continue getting list responses if more than 1000 files exist
-                listRequest.Marker = listResponse.NextMarker;
+                    // Set the marker property, continue getting list responses if more than 1000 files exist
+                    listRequest.Marker = listResponse.NextMarker;
+                    Console.WriteLine("Finished Processing Request # " + count);
+
+                    count++;
+
                 } while (listResponse.IsTruncated);
 
-                count++;
             }
         }
 
         public List<ListObjectsResponse> GetObjectResponseList(List<ListObjectsRequest> listObjRequests)
         {
             ProcessListIntoResponses(listObjRequests);
+            
+
             return objResponses;
         }
     }

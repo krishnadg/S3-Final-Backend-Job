@@ -41,6 +41,7 @@ namespace S3ClassLib
             //Gather all prefixes that are needed to find all team names
             SearchPrefixGenerator searchPrefixGen = new SearchPrefixGenerator(client, bucket);
             List<string> bucketPrefixList = searchPrefixGen.GetListOfPrefixes(bucketPrefix);
+            Console.WriteLine("\nNumber of unique days teams' logs are being stored/number of initial requests being made to find all teams" + bucketPrefixList.Count);
 
             //Gather team names in S3 Bucket
             TeamNameGenerator teamNameGen = new TeamNameGenerator(client, bucket);
@@ -49,25 +50,24 @@ namespace S3ClassLib
             //Generate necessary requests to be made to S3Bucket
             ObjectRequestGenerator objRequestGen = new ObjectRequestGenerator(bucket);
             List<ListObjectsRequest> objRequests = objRequestGen.GetObjectRequestList(teamNames);
-            Console.WriteLine( objRequests.Count + " ListObjectRequests Generated...");
+            Console.WriteLine( objRequests.Count + " \nListObjectRequests Generated...\n");
             
             //Make said requests and store the corresponding list responses
             ObjectResponseGenerator objResponseGen = new ObjectResponseGenerator(client);
-            Console.WriteLine("Making Requests");
+            Console.WriteLine("\nMaking Requests\n");
 
             List<ListObjectsResponse> objResponses = objResponseGen.GetObjectResponseList(objRequests);
-            Console.WriteLine(objResponses.Count + "Responses Obtained");
+            Console.WriteLine("\n\nJOB TOTAL NUMBER OF LIST OBJECTS REQUESTS: " + objResponses.Count );
             
             //Parse responses into readable storage container to be sent to frontend workspace
             ObjectResponseParser objResponseParser = new ObjectResponseParser(bucketPrefix);
             Dictionary<string, long> teamStorageData = objResponseParser.GetDataStructure(objResponses);
-            Console.WriteLine("Responses Parsed");
+            Console.WriteLine("\nResponses Parsed\n");
 
-            
 
             JsonFileConstructor jsonConstructor = new JsonFileConstructor();
             jsonConstructor.AddJsonFileToS3(client, teamStorageData);
-            
+            Console.WriteLine("\nJson uploaded to s3...");
             //Print Data to Console
             objResponseParser.PrintData();
             

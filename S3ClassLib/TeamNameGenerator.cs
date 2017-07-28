@@ -112,7 +112,7 @@ namespace S3ClassLib
         {
             foreach (KeyValuePair<string, List<string>> teamNamePair in teamNamesAndPrefixes)
             {
-                Console.WriteLine("Team: " + teamNamePair.Key + " Prefixes..." + teamNamePair.Value.Count);
+                Console.WriteLine("Team: " + teamNamePair.Key + " Number of unique days with this team's logs present: " + teamNamePair.Value.Count);
             }
         }
 
