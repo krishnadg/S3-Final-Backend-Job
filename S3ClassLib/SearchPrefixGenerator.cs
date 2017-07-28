@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace S3ClassLib
 {
-    /*Class used to sort through entire bucket to gather/store all unique team names in a list*/
+    /*Class used to sort through entire bucket to gather/store all log dates in a list*/
     public class SearchPrefixGenerator 
     {
         
@@ -74,7 +74,7 @@ namespace S3ClassLib
                         preTeamPrefixes.Add(commonPrefix);
                 }
  
-            break; //this will limit 1 date multiple teams...
+            //break; //this will limit 1 date multiple teams... un comment to run quick test on 1 day
             // Set the marker property
             listRequest.Marker = listResponse.NextMarker;
             } while (listResponse.IsTruncated);
