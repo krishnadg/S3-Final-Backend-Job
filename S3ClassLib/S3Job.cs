@@ -50,7 +50,7 @@ namespace S3ClassLib
             //Generate necessary requests to be made to S3Bucket
             ObjectRequestGenerator objRequestGen = new ObjectRequestGenerator(bucket);
             List<ListObjectsRequest> objRequests = objRequestGen.GetObjectRequestList(teamNames);
-            Console.WriteLine( objRequests.Count + " \nListObjectRequests Generated...\n");
+            Console.WriteLine( objRequests.Count + " ListObjectRequests Generated...\n");
             
             //Make said requests and store the corresponding list responses
             ObjectResponseGenerator objResponseGen = new ObjectResponseGenerator(client);
